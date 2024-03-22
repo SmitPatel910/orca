@@ -1,7 +1,7 @@
 import json
 import random
 
-with open('../../dataset/ready_for_sample/fixeval_crash_cfg_entire.json', 'r') as file:
+with open('../../dataset/fixeval_crash_for_sample.json', 'r') as file:
     fixeval_cfg = json.load(file)
 
 def reset_problem_ids(data, fixeval_cfg):
