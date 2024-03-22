@@ -21,10 +21,10 @@ def write_new_code(var_value_list, code):
     modified_code = '\n'.join(modified_code_lines)
     return modified_code
 
-with open('../../dataset/other/filtered_fixeval_dataset.json', 'r') as file:
+with open('../../dataset/filtered_fixeval_dataset.json', 'r') as file:
     main_data = json.load(file)
 
-with open('../../dataset/trace/fixeval_crash_trace.json', 'r') as file:
+with open('../../dataset/fixeval_crash_trace.json', 'r') as file:
     trace_filtered_data = json.load(file)
 
 # new dataset 
