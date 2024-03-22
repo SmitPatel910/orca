@@ -81,5 +81,5 @@ for problem_id in trace_filtered_data:
                 "exception_info" : {"class": exception_info[0]['exception_class'], "message": error_message},
             }
 print(count)
-with open('../../dataset/ready_for_cfg/fixeval_crash_dataset.json', 'w') as file:
+with open('../../dataset/fixeval_crash_for_cfg.json', 'w') as file:
     json.dump(new_dataset, file)
