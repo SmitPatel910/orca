@@ -46,7 +46,7 @@ if __name__ == '__main__':
         input_cfg = make_cfg_into_code(f_cfg_block_statements, f_cfg_next_block, f_cfg_block_range)
         if input_cfg == "": print("Error")
     else:
-        with open('../../dataset/ready_for_cfg/fixeval_crash_dataset.json','r') as file:
+        with open('../../dataset/fixeval_crash_for_cfg.json','r') as file:
             fixeval_dataset = json.load(file)
         # cfg_dataset
         count = 0
@@ -85,6 +85,6 @@ if __name__ == '__main__':
         print(f"True Instances: {true}")
         print(f"False Instances: {count}")
         
-        with open('../../dataset/ready_for_sample/fixeval_crash_cfg_entire.json','w') as file:
+        with open('../../dataset/fixeval_crash_for_sample.json','w') as file:
             json.dump(final_dataset, file)
 
