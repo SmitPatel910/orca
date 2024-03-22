@@ -75,8 +75,9 @@ print()
 print("RQ1")
 print(f"Is Error: {100 * (error_count/count):.2f}")
 print(f"Error Block: {100 * (EB/count):.2f}")
-print()
 
+print("-------------------------------------------")
+print()
 print("RQ2")
 print(f"Exact Match: {100 * (EM/count):.2f}")
 print()
@@ -98,6 +99,8 @@ print()
 print("RQ3")
 print(f"Symbol Table: {100 * (ST/count):.2f}")
 
+print("-------------------------------------------")
+print()
 # RQ4
 total = 0
 type_statements = {
