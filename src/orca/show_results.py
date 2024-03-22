@@ -151,11 +151,17 @@ while_pre = f"{100 * (type_statements['while']['correct'] / type_statements['whi
 loop_pre = for_pre + while_pre
 if_pre = f"{100 * (type_statements['if']['correct'] / type_statements['if']['total']):.2f}"
 simple_pre = f"{100 * (type_statements['simple']['correct'] / type_statements['simple']['total']):.2f}"
-
+print("RQ4")
+print("Total: ", total)
 print()
-print("Type:        FOR       WHILE       IF       SIMPLE")
-print(f"Instances:   {type_statements['for']['total']}        {type_statements['while']['total']}         {type_statements['if']['total']}         {type_statements['simple']['total']} ")
-print('---------------------------------------------------------')
-print(f"Correct:      {type_statements['for']['correct']}        {type_statements['while']['correct']}         {type_statements['if']['correct']}          {type_statements['simple']['correct']}")
-print(f"Acc(%):    ({(for_pre)}%)  ({(while_pre)}%)  ({(if_pre)}%)    ({(simple_pre)}%)")
+print("Total Simple Stmt: ", type_statements['simple']['total']})
+print("Detected Crashes: ", {type_statements['simple']['correct']})
+print(f"Accuracy: {simple_pre}%")
 print()
+print("Total Branch: ", {type_statements['if']['total']}) 
+print("Detected Crashes: ", {type_statements['if']['correct']})
+print(f"Accuracy: {if_pre}%")
+print()
+print("Total Loops: ",  {type_statements['for']['total']}+{type_statements['while']['total']})
+print("Detected Crashes: ",  {type_statements['for']['correct']}+{type_statements['while']['correct']})
+print(f"Accuracy: {for_pre + while_pre}%")
