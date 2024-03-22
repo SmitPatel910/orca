@@ -72,7 +72,7 @@ for root, dirs, files in tqdm(os.walk(folder_path)):
 print(total_count, correct, incorrect)
 
 try:
-    with open('../../dataset/trace/fixeval_crash_trace.json', 'w') as file:
+    with open('../../dataset/fixeval_crash_trace.json', 'w') as file:
         json.dump(incorrect_prob_dict, file, indent=4)
 except Exception as e:
     print(e)
