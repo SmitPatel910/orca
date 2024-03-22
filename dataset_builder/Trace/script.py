@@ -5,7 +5,7 @@ import subprocess
 import ast
 import hunter
 
-with open('../../dataset/other/filtered_fixeval_dataset.json', 'r') as file:
+with open('../../dataset/filtered_fixeval_dataset.json', 'r') as file:
     fixeval_dataset = json.load(file)
 
 def write_code_to_test_function(submission_code):
