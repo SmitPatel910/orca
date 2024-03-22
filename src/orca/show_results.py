@@ -146,9 +146,7 @@ for key in response_cache.keys():
 
 
 # Accuracy Analysis
-for_pre = f"{100 * (type_statements['for']['correct'] / type_statements['for']['total']):.2f}"
-while_pre = f"{100 * (type_statements['while']['correct'] / type_statements['while']['total']):.2f}"
-loop_pre = for_pre + while_pre
+for_pre = f"{100 * ((type_statements['for']['correct'] + type_statements['while']['correct']) / (type_statements['for']['total']+ type_statements['while']['total'])):.2f}"
 if_pre = f"{100 * (type_statements['if']['correct'] / type_statements['if']['total']):.2f}"
 simple_pre = f"{100 * (type_statements['simple']['correct'] / type_statements['simple']['total']):.2f}"
 print("RQ4")
@@ -164,4 +162,4 @@ print(f"Accuracy: {if_pre}%")
 print()
 print("Total Loops: ",  type_statements['for']['total'] + type_statements['while']['total'])
 print("Detected Crashes: ",  type_statements['for']['correct'] + type_statements['while']['correct'])
-print(f"Accuracy: {for_pre + while_pre}%")
+print(f"Accuracy: {for_pre}%")
