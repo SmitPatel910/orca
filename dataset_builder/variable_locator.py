@@ -115,7 +115,6 @@ def caller_function(codeDict):
 
     prob_count = 0
     sub_count = 0   
-    print("Total problems: ", len(codeDict))
     for problemID in tqdm(codeDict):
         prob_count += 1
         submissions = {}
