@@ -73,7 +73,6 @@ for prob in response_cache:
 print(f"Total: {count}")
 print()
 print("RQ1")
-print(f"Is Error: {100 * (error_count/count):.2f}")
 print(f"Error Block: {100 * (EB/count):.2f}")
 
 print("-------------------------------------------")
@@ -146,8 +145,6 @@ for key in response_cache.keys():
         except:
             continue
 
-
-
 # Accuracy Analysis
 for_pre = f"{100 * ((type_statements['for']['correct'] + type_statements['while']['correct']) / (type_statements['for']['total']+ type_statements['while']['total'])):.2f}"
 if_pre = f"{100 * (type_statements['if']['correct'] / type_statements['if']['total']):.2f}"
@@ -166,3 +163,4 @@ print()
 print("Total Loops: ",  type_statements['for']['total'] + type_statements['while']['total'])
 print("Detected Crashes: ",  type_statements['for']['correct'] + type_statements['while']['correct'])
 print(f"Accuracy: {for_pre}%")
+print()
