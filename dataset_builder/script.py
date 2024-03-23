@@ -68,6 +68,6 @@ variable_locations = caller_function(collected_problems)
 final_dataset, true_count = filter_code_based_on_input_lines(variable_locations)
 print(f"Total: {problem_submission_count}, True: {true_count}")
 
-with open('../dataset/other/filtered_fixeval_dataset.json', 'w') as f:
+with open('../dataset/filtered_fixeval_dataset.json', 'w') as f:
     json.dump(final_dataset, f, indent=4)
 
