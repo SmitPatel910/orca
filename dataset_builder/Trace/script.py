@@ -47,15 +47,16 @@ false_count = 0
 true_count = 0
 # iterate through the dataset
 for problemID in tqdm(fixeval_dataset):
-    prob_count += 1
-
     traceDict = {}
+    # Check if the problem has any testcases
+    testcase_path = f"TestCases/{problemID}"
+    if not os.path.exists(testcase_path): continue
     if os.path.exists(f'output/TraceFiles/{problemID}/'):   continue
     else: os.makedirs(f'output/TraceFiles/{problemID}/')
     
     for index, submissionCode in enumerate(fixeval_dataset[problemID]):
         sub_count += 1
-        output_path = f"output/TraceFiles_2/{problemID}/{submissionCode}"
+        output_path = f"output/TraceFiles/{problemID}/{submissionCode}"
         if not os.path.exists(f"TestCases/{problemID}"): continue
         
         code = fixeval_dataset[problemID][submissionCode]['code']
@@ -74,6 +75,7 @@ for problemID in tqdm(fixeval_dataset):
                 env = os.environ.copy()
                 env['HUNTER_TRACE_VARS'] = ','.join(variables_to_trace)
                 subprocess.run(['python','hunter_tool.py'], stdin=test_case_file, stdout=output_file, stderr=subprocess.STDOUT, timeout=10, env = env)
+                # subprocess.run(['python3','hunter_tool.py'], stdin=test_case_file, stdout=output_file, stderr=subprocess.STDOUT, timeout=10)
                 true_count += 1
             except:
                 false_count += 1
