@@ -23,14 +23,12 @@ folder_path = "output/TraceFiles/"
 
 total_count = 0
 incorrect = 0
-correct = 0
 
 incorrect_prob_dict = {}
 correct_prob_dict = {}
 
 for root, dirs, files in tqdm(os.walk(folder_path)):
     problem_id = root.split('/')[-1]
-    correct_submissions = {}
     incorrect_submissions = {}
 
     for file in files:
@@ -43,10 +41,8 @@ for root, dirs, files in tqdm(os.walk(folder_path)):
         with open(file_path, 'r') as txt_file:
             content = txt_file.read()
             incorrect_temp = {}
-            # Try for Incorrect Execution
             try:
                 execution_order = get_the_execution_order(content)
-                if len(execution_order) > 80: continue
                 extracted_info, is_exception = extract_info_upto_exception(content)
                 state_info, exception_info = get_info_on_exception(content)
                 final_trace = extracted_info + state_info
@@ -64,12 +60,10 @@ for root, dirs, files in tqdm(os.walk(folder_path)):
             except Exception as e:
                 pass
 
-    if correct_submissions != {}:
-        correct_prob_dict[problem_id] = correct_submissions
     if incorrect_submissions != {}:
         incorrect_prob_dict[problem_id] = incorrect_submissions
 
-print(total_count, correct, incorrect)
+print(total_count, incorrect)
 
 try:
     with open('../../dataset/fixeval_crash_trace.json', 'w') as file:
