@@ -37,19 +37,21 @@ for id in parsed_prediction.keys():
         PRE_R += prefix_recall
         PRE_P += prefix_precision
         ST += symbol_table_accuracy
-        if ST == 1.0:
-            print(id)
-            print(f"ST: {symbol_table_accuracy}")
-        else:
-            print(id)
-            print(f"ST: {symbol_table_accuracy}")
-        print("--------------------------------------------------")
     except:
         continue
 
+print(f"Total: {len(parsed_prediction)}")
+print()
+
+print("RQ2")
 print(f"Exact Match: {100 * (EM/len(parsed_prediction)):.2f}")
+print()
 print(f"Prefix Match Recall: {100 * (PRE_R/len(parsed_prediction)):.2f}")
 print(f"Prefix Match Precision: {100 * (PRE_P/len(parsed_prediction)):.2f}")
+print()
 print(f"Statement Coverage Recall: {100 * (COV_R/len(parsed_prediction)):.2f}")
 print(f"Statement Coverage Precision: {100 * (COV_P/len(parsed_prediction)):.2f}")
+print()
+print("RQ3")
 print(f"Symbol Table Accuracy: {100 * (ST/len(parsed_prediction)):.2f}")
+print()
