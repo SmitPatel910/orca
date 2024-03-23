@@ -56,13 +56,6 @@ def filter_code_based_on_input_lines(dataset):
             if submission_block["if_else_same_line"] or submission_block["while_loop"] or submission_block["for_loop_scope_2"] or submission_block["for_loop"] or submission_block["method"]: continue
             input_var = submission_block['Input variables']
             if input_var == []: continue
-            # code = submission_block['code']
-            # Analyze the code (For Loop, While Loop, Method)
-            # try:
-            #     analyzer = analyze_code(code)
-            # except Exception as e: print(e); continue
-            # # Check the conditions from the analyzer
-            # if not check_code_conditions(analyzer): continue
             true_count += 1
             temp[submission] = dataset[key][submission]
         filter_dataset[key] = temp
