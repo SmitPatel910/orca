@@ -104,10 +104,6 @@ def if_else_in_same_line(code):
 
     return False
 
-
-# with open('filtered_problems_2.json', 'r') as file:
-#     codeDict = json.load(file)
-
 def caller_function(codeDict):
     error_count = 0
     variables_in_while_loop = 0
@@ -164,11 +160,4 @@ def caller_function(codeDict):
 
         variable_location[problemID] = submissions
 
-    print("Total problems: ", prob_count)
-    print("Total submissions: ", sub_count)
-    print("Error count: ", error_count)
-
     return variable_location
-
-# with open('variables_location_3.json', 'w') as file:
-#     json.dump(variable_location, file, indent=4)
