@@ -1,4 +1,4 @@
-name: smit
+name: orca
 channels:
   - defaults
 dependencies:
