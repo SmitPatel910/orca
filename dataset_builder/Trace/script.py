@@ -75,7 +75,6 @@ for problemID in tqdm(fixeval_dataset):
                 env = os.environ.copy()
                 env['HUNTER_TRACE_VARS'] = ','.join(variables_to_trace)
                 subprocess.run(['python','hunter_tool.py'], stdin=test_case_file, stdout=output_file, stderr=subprocess.STDOUT, timeout=10, env = env)
-                # subprocess.run(['python3','hunter_tool.py'], stdin=test_case_file, stdout=output_file, stderr=subprocess.STDOUT, timeout=10)
                 true_count += 1
             except:
                 false_count += 1
