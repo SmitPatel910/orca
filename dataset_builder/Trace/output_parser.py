@@ -22,8 +22,6 @@ def extract_info_upto_exception(text):
         if "exception" in line:
             flag = True
             break
-        # if "return" in line:
-        #     break
         line_number_match = re.search(r':(\d+)', line)
         if line_number_match:
             prev_line = line_number
@@ -93,19 +91,12 @@ def get_info_on_exception(text):
         if exception_message_match:
             exception_message = exception_message_match.group(1)
             exception_message = exception_message.strip("\"'")
-            # pattern = r"(<class '.*?'>), (TypeError\(.*?\))"
             pattern = r"(<class '.*?'>), (TypeError\((?:[^()]|\([^()]*\))*?\))"
             match = re.search(pattern, exception_message)
             if match:
                 class_info = match.group(1)  
                 type_error_message = match.group(2)
             
-            # exception_info = {
-            #     "line": int(line_number) - 1,
-            #     "var_val": variables,
-            #     "exception_class": class_info,
-            #     "error_message": type_error_message
-            # }
             break
 
     return [{"line" : int(line_number) - 1, "var_val": variables}], [{"exception_class": class_info, "error_message": type_error_message}]
