@@ -17,7 +17,7 @@ def reset_problem_ids(data, fixeval_cfg):
 
     return reset_data
 
-def build_dataset(fixeval_cfg):
+def build_dataset(sample_size_dataset, fixeval_cfg):
     problem_solution_size = []
     for key in fixeval_cfg:
         solution_in_prob = len(fixeval_cfg[key])
@@ -27,7 +27,7 @@ def build_dataset(fixeval_cfg):
     total_solutions = sum(problem_solution_size)
     average_number_of_solutions_in_each_problem = total_solutions / total_problems
 
-    dataset_sample_size = 373
+    dataset_sample_size = int(sample_size_dataset)
     percentage_to_select = (dataset_sample_size / total_solutions)
     solutions_in_selected_problems = {}
     
@@ -121,16 +121,24 @@ def get_stats_dataset(dataset):
 # Get the stats for the entire fixeval_cfg dataset
 main_stats, freq, count = get_stats(fixeval_cfg)
 # sorted_keys = sorted(freq.keys(), key=lambda x: (x.isdigit(), int(x) if x.isdigit() else x))
+print("Current Dataset Stats")
 print(f"Total: {count}")
-print(freq)
+print("Ground Truth Length Stats:", freq)
 print()
 
 
 # Sampling the Dataset by Random Distribution
-fdataset = build_dataset(fixeval_cfg)
+print(f"Total Available Instances: {count}")
+print()
+print("To build the Sample Dataset, You have to enter the sample size of the dataset.")
+print("******************** Sample Size ********************")
+print("**** 0% < (Input_Size) < 10% 0f total available instance ****")
+print()
+sample_size_dataset = input("Enter the sample size: ")
+fdataset = build_dataset(sample_size_dataset, fixeval_cfg)
 stats, count = get_stats_dataset(fdataset)
 print(f"Total: {count}")
-print(stats)
+# print(stats)
 
 # Save the datasets
 with open('../../dataset/fixeval_cfg.json', 'w') as file:
