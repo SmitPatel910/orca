@@ -44,7 +44,6 @@ for prob in response_cache:
 print(f"Total: {count}")
 print()
 print("RQ1")
-print(f"Is Error: {100 * (Is_Error/count):.2f}")
 print(f"Error Localization: {100 * (ErrorLocation/count):.2f}")
 print()
 print("RQ2")
