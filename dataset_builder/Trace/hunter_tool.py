@@ -17,5 +17,3 @@ if __name__ == "__main__":
         exc_type, exc_obj, exc_tb = sys.exc_info()
         error_detail = exc_obj
         error_type = exc_type
-        print(f"Error: {exc_type} - {exc_obj} - {exc_tb.tb_lineno} - {e}")
-
