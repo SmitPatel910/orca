@@ -19,7 +19,11 @@ Several studies have found numerous insecure code snippets in StackOverflow post
 4. To run the ORCA tool, run the following command:
    ```bash
    python pipeline.py
-5. To review accuracy metrics for ```RQ1-RQ4```, execute:
+5. To review the ORCA results for ```RQ1-RQ4```, execute:
+   ```bash
+   python show_results.py
+   ```
+6. To review the baseline results for ```RQ1-RQ3```, go to ```src/baselines/b(0-2)```, execute:
    ```bash
    python show_results.py
    ```
@@ -40,5 +44,3 @@ Several studies have found numerous insecure code snippets in StackOverflow post
 6. For Control Flow Graph construction execute  ```python cfg_fixeval.py``` from ```dataset_builder/CFG```.
 7. Sample the dataset by running ```python dataset_sample.py``` in ```dataset_builder/Sampling```
 8. With the dataset prepared, initiate ORCA's pipeline with ```python pipeline.py``` in ```src/orca```.
-   
-   
