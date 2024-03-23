@@ -1,7 +1,7 @@
 import json
 from orca.utils import analyze_code, remove_comments_and_blank_lines, check_code_conditions, filter_code_based_on_input_lines
 from variable_locator import caller_function
-with open ('../dataset/other/structured_fixeval_dataset.json', 'r') as f:
+with open ('../dataset/structured_fixeval_dataset.json', 'r') as f:
     structured_data = json.load(f)
 
 total_count = 0
