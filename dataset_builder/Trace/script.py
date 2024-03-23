@@ -47,7 +47,6 @@ false_count = 0
 true_count = 0
 # iterate through the dataset
 for problemID in tqdm(fixeval_dataset):
-    if prob_count == 201: break
     prob_count += 1
 
     traceDict = {}
