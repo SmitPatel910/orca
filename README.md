@@ -34,6 +34,8 @@ Several studies have found numerous insecure code snippets in StackOverflow post
    ```bash
    conda env create -f environment.yml
    conda activate orca
+ - If you encounter difficulties installing the above dependencies, Install the [hunter](https://pypi.org/project/hunter/) and [python-graphs](https://github.com/google-research/python-graphs).
+
 2. Download the [FixEval](https://drive.google.com/file/d/1LqQVAXltAQdodzhoylgYvL0vt3r_u_Bu/view?usp=sharing) Dataset and and move it to the ```dataset``` directory.
 3. In ```dataset_builder```, run ```python -W ignore script.py``` to preprocess the dataset.
 4. To generate execution traces, use the following commands in ```dataset_builder/Trace``` directory:
