@@ -9,6 +9,7 @@ Large Language Models (LLMs) have been excellent in generating and reasoning abo
     - [API Key Setup](#api-key-setup)
   - [Directory Structure](#directory-structure)
   - [Usage Guide](#usage-guide)
+  - [License](#license)
 
 ## Getting Started
 Welcome to the project! This section will guide you through getting everything set up and ready to go.
@@ -94,3 +95,5 @@ To get the accuracy of all the bsaelines and ORCA for RQs, follow the given tabl
 3. Go to ```orca/dataset_builder``` directory and run ```python -W ignore script.py``` to build the dataset.
 4. Go to ```orca/src/baselines/b0/dataset_building``` directory and run ```python -W ignore script.py``` to build the dataset for Code Executor Baseline (B0).
 
+## License
+See the [LICENSE](LICENSE) file for more details.
