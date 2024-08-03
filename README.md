@@ -67,26 +67,26 @@ To get the accuracy of all the bsaelines and ORCA for RQs, follow the given tabl
 
 ### Reproduce the Results
 
-For baseline B0
--  Go to `orca/src/baselines/b0/dataset_building` directory and run `python -W ignore script.py` to build the CodeExecutor version dataset.
--  Go to `orca/src/baselines/b0` directory and run `python run.py` and `python show_results.py`
+- baseline __B0__
+  -  Go to `orca/src/baselines/b0/dataset_building` directory and run `python -W ignore script.py` to build the CodeExecutor version dataset.
+  -  Go to `orca/src/baselines/b0` directory and run `python run.py` and `python show_results.py`
 
-__Create a ```.env ``` file inside ```orca/src/orca/```, ```orca/src/baselines/b1/```, and ```orca/src/baselines/b2/``` directory.__
+- Create a ```.env ``` file inside ```orca/src/orca/```, ```orca/src/baselines/b1/```, and ```orca/src/baselines/b2/``` directory.__
    ```bash
    AZURE_OPENAI_ENDPOINT = ""
    AZURE_OPENAI_KEY = ""
    AZURE_API_VERSION = ""
    ```
-__For baseline __B1__ and __B2____
--   Update the model name from the `model.py` file (line #54) in `orca/src/baselines/b1/`, `orca/src/baselines/b1/` for B1 and B2, respectively.
--   Recommend to use Gpt 3.5 turbo model which matches with the ORCA tool to keep the same model among all approaches. Otherwise use GPT 3.5 base model.
--   Run the pipeline for __B1__ and __B2__ by `python pipeline.py` from `orca/src/baselines/b1/`, `orca/src/baselines/b1/` directory, respectively.
--   Check the results for __B1__ and __B2__ by `python show_results.py`.
+- For baseline __B1__ and __B2__
+  -   Update the model name from the `model.py` file (line #54) in `orca/src/baselines/b1/`, `orca/src/baselines/b1/` for B1 and B2, respectively.
+  -   Recommend to use Gpt 3.5 turbo model which matches with the ORCA tool to keep the same model among all approaches. Otherwise use GPT 3.5 base model.
+  -   Run the pipeline for __B1__ and __B2__ by `python pipeline.py` from `orca/src/baselines/b1/`, `orca/src/baselines/b1/` directory, respectively.
+  -   Check the results for __B1__ and __B2__ by `python show_results.py`.
 
-__For ORCA__
--  Update the model name from the `model.py` file (line #52) in `orca/src/orca/`. Use GPT 3.5 Turbo model which offers higher token limit.
--  Run the pipeline for __ORCA__ by `python pipeline.py` from `orca/src/orca/` directory.
--  Check the results for __ORCA__ by `python show_results.py`.
+- For __ORCA__
+  -  Update the model name from the `model.py` file (line #52) in `orca/src/orca/`. Use GPT 3.5 Turbo model which offers higher token limit.
+  -  Run the pipeline for __ORCA__ by `python pipeline.py` from `orca/src/orca/` directory.
+  -  Check the results for __ORCA__ by `python show_results.py`.
 
 ### Reproduce the Dataset
 1. Download the [FixEval](https://drive.google.com/file/d/1LqQVAXltAQdodzhoylgYvL0vt3r_u_Bu/view?usp=sharing) Dataset and and move it to the ```dataset``` directory.
