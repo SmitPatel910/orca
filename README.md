@@ -9,8 +9,8 @@ Large Language Models (LLMs) have been excellent in generating and reasoning abo
     - [API Key Setup](#api-key-setup)
   - [Directory Structure](#directory-structure)
   - [Usage Guide](#usage-guide)
-  - [License](#license)
   - [Contributing Guidelines](#contributing-guidelines)
+  - [License](#license)
     
 ## Getting Started
 Welcome to the project! This section will guide you through getting everything set up and ready to go.
