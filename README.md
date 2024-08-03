@@ -59,7 +59,7 @@ __ORCA__ traverse the Control flow graph with the Observation, Reasoning, and Ac
 
 To get the accuracy of all the bsaelines and ORCA for RQs, follow the given table.
 
-|           Task          |   Table # & RQ # in Paper   |    Directory Location   |      Run Command(s)      |
+|           Approach          |   Table # & RQ # in Paper   |    Directory Location   |      Run Command(s)      |
 |:-----------------------:|:---------------------------:|:-----------------------:|:------------------------:|
 |     __ORCA__ Results    | Table - 1 to 9, RQ - 1 to 5  |     `orca/src/orca/`    | `python show_results.py` |
 | Baseline __Bo__ Results | Table - 5,6,8, RQ - 3 & 4  | `orca/src/baselines/b0` | `python show_results.py` |
