@@ -51,7 +51,7 @@ class AgentInteraction:
         if seed is None:
             seed = 42
         response = self.client.chat.completions.create(
-            model="gpt_35_turbo_16k",
+            model="gpt-35",
             seed=seed,
             temperature=temmprature,
             timeout=120,
