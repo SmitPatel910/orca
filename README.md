@@ -4,13 +4,13 @@ Large Language Models (LLMs) have been excellent in generating and reasoning abo
 
 ## Table of Contents
 - [Getting Started](#getting-started)
-  - [Setup](#setup)
-    - [Project Environment](#project-environment)
-    - [API Key Setup](#api-key-setup)
-  - [Directory Structure](#directory-structure)
-  - [Usage Guide](#usage-guide)
-  - [Contributing Guidelines](#contributing-guidelines)
-  - [License](#license)
+- [Setup](#setup)
+  - [Project Environment](#project-environment)
+  - [API Key Setup](#api-key-setup)
+- [Directory Structure](#directory-structure)
+- [Usage Guide](#usage-guide)
+- [Contributing Guidelines](#contributing-guidelines)
+- [License](#license)
     
 ## Getting Started
 Welcome to the project! This section will guide you through getting everything set up and ready to go.
