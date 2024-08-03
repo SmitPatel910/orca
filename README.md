@@ -90,6 +90,7 @@ To get the accuracy of all the bsaelines and ORCA for RQs, follow the given tabl
 
 ### Reproduce the Dataset
 1. Download the [FixEval](https://drive.google.com/file/d/1LqQVAXltAQdodzhoylgYvL0vt3r_u_Bu/view?usp=sharing) Dataset and and move it to the ```dataset``` directory.
-2. Go to ```orca/dataset_builder``` directory and run ```python -W ignore script.py``` to build the dataset.
-3. Go to ```orca/src/baselines/b0/dataset_building``` directory and run ```python -W ignore script.py``` to build the dataset for Code Executor Baseline (B0).
+2. Download the [Testcases](https://drive.google.com/file/d/1ZwyMC_p7JxKyIBtlS_frBpPau8PzXWi7/view?usp=sharing) zip file and Extract it to the `orca/dataset_builder/Hunter/ directory.`
+3. Go to ```orca/dataset_builder``` directory and run ```python -W ignore script.py``` to build the dataset.
+4. Go to ```orca/src/baselines/b0/dataset_building``` directory and run ```python -W ignore script.py``` to build the dataset for Code Executor Baseline (B0).
 
