@@ -68,7 +68,7 @@ To get the accuracy of all the bsaelines and ORCA for RQs, follow the given tabl
 
 ### Reproduce the Results
 
-- baseline __B0__
+- For baseline __B0__
   -  Go to `orca/src/baselines/b0/dataset_building` directory and run `python -W ignore script.py` to build the CodeExecutor version dataset.
   -  Go to `orca/src/baselines/b0` directory and run `python run.py` and `python show_results.py`
 
