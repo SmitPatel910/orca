@@ -60,7 +60,7 @@ To get the accuracy of all the bsaelines and ORCA for RQs, follow the given tabl
 |           Task          |   Table # & RQ # in Paper   |    Directory Location   |      Run Command(s)      |
 |:-----------------------:|:---------------------------:|:-----------------------:|:------------------------:|
 |     __ORCA__ Results    | Table - 1 to 9, RQ - 1 to 5  |     `orca/src/orca/`    | `python show_results.py` |
-| Baseline __Bo__ Results | Table - 5,6,8, RQ - 3 & 4  | `orca/src/baselines/b0` | `python show_results.py` |
+| Baseline __Bo__ Results | Table - 5, 6, 8, RQ - 3 & 4  | `orca/src/baselines/b0` | `python show_results.py` |
 | Baseline __B1__ Results | Table - 1 to 6, RQ - 1 to 3 | `orca/src/baselines/b1` | `python show_results.py` |
 | Baseline __B2__ Results | Table - 1 to 6, RQ - 1 to 3 | `orca/src/baselines/b2` | `python show_results.py` |
 
