@@ -8,8 +8,6 @@ The artifact has been made publicly accessible on ([GitHub](https://github.com/S
 ## Provenance
 The source code, data, and model outputs are publicly available on ([GitHub](https://github.com/SmitPatel910/orca))
 
----
-
 ## Getting Started
 This section describes the preqrequisites, and contains instructions, to get the project up and running.
 
