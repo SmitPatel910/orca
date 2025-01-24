@@ -86,7 +86,7 @@ class AgentInteraction:
 
         Arguments:
             messages (list): A list of messages to send to the OpenAI model.
-            model (str, optional): The name of the OpenAI model to use (default: "gpt_35_turbo_16k").
+            model (str, optional): The name of the OpenAI model to use.
             timeOut (int, optional): The timeout in seconds for the API request (default: 120).
             temmprature (float, optional): The temperature for response generation to control randomness (default: 0.7).
             seed (int, optional): The seed for deterministic behavior in the model (default: 42).
