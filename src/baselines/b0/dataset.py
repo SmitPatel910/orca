@@ -1,3 +1,11 @@
+'''
+References:
+
+This code is based on the baseline implementation from the following repository:
+
+[CodeExecutor](https://github.com/microsoft/CodeBERT/blob/master/CodeExecutor/pretrain/dataset.py)
+'''
+
 import json
 import pickle
 from pathlib import Path

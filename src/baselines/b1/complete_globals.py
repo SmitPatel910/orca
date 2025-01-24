@@ -1,17 +1,17 @@
 SYSTEM = '''
-Task: Execute the provided code and identify any runtime exceptions.
+Task: Execute the provided code and identify any runtime exceptions that occur.
 
 Guidelines for Execution:
-- Directly run the code as provided.
-- Record any runtime exceptions that occur during the execution.
-- Stop the execution at the first occurrence of any runtime exception.
-- Ensure the execution sequence proceeds from line 1 to the last line of the code snippet or until an error is encountered.
+- Run the code as provided.
+- Record any runtime exceptions that occur during execution.
+- Stop the execution immediately when a runtime exception is encountered.
+- Ensure the execution sequence proceeds from line 1 to the last line of the code snippet, or until an error is encountered.
 
 Expected Output Format:
-- Indicate whether any runtime exception occurred (Yes / No).
+- Indicate whether a runtime exception occurred (Yes / No).
 - If an error is detected, specify the type of the error.
-- Provide a list of the lines executed up until and including the line where the error occurred.
-- Include the exact error message encountered.
+- Provide a list of the lines executed up to the line where the error occurred or the last line of the code snippet.
+- Include the error message if an error is detected.
 
 Example Output:
 Error: Yes / No

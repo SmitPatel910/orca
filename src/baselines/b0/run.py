@@ -16,6 +16,10 @@ from transformers import (AdamW, get_linear_schedule_with_warmup, RobertaConfig,
 logger = logging.getLogger(__name__)        
 
 def set_seed(args):
+    '''References:
+    This code is based on the baseline implementation from the following repository:
+    [CodeExecutor](https://github.com/microsoft/CodeBERT/blob/master/CodeExecutor/pretrain/run.py)
+    '''
     random.seed(args.seed)
     np.random.seed(args.seed)
     torch.manual_seed(args.seed)
@@ -23,6 +27,10 @@ def set_seed(args):
         torch.cuda.manual_seed_all(args.seed)
 
 def evaluate(args, eval_dataset, model, tokenizer):
+    '''References:
+    This code is based on the baseline implementation from the following repository:
+    [CodeExecutor](https://github.com/microsoft/CodeBERT/blob/master/CodeExecutor/pretrain/run.py)
+    '''
     eval_dataloader = DataLoader(eval_dataset, sampler=SequentialSampler(eval_dataset), 
                                  batch_size=args.eval_batch_size, drop_last=False)
     # Evaluate!
@@ -49,34 +57,72 @@ def evaluate(args, eval_dataset, model, tokenizer):
                 pred_list.append(text)
     return pred_list
 
+# Load the Dataset
 def load_dataset(dataset_path):
     with open(dataset_path, 'r') as f:
         dataset = json.load(f)
     return dataset
 
-# Fetch the Symbol Table
+# Fetch the Symbol Table from the CodeExecutor Prediction
 def fetch_the_symbol_table(data):
+    '''Fetch the symbol table and corresponding line numbers from CodeExecutor predictions.
+
+    This function processes a list of prediction data segments, extracts line numbers, 
+    and parses symbol table information enclosed within `<state>` and `</state>` tags. 
+
+    Arguments:
+        data (list): A list of strings, where each string represents a prediction segment 
+                    with the following format:
+                    Example: [
+                                "<1> <state>x:10<dictsep>y:20</state>",
+                                "<4> <state>z:30</state>",
+                    ]
+
+    Returns:
+        tuple: A tuple containing:
+            - prob_sub_dict (list): A list of dictionaries, where each dictionary has:
+                - 'line' (int): The line number (adjusted by +1).
+                - 'symbol_table' (dict): A dictionary containing key-value pairs extracted from `<state>`.
+            Example:
+              [
+                  {'line': 2, 'symbol_table': {'x': '10', 'y': '20'}},
+                  {'line': 5, 'symbol_table': {'z': '30'}}
+              ]
+            - extracted_line_numbers (list): A list of integers representing all extracted line numbers (adjusted by +1).
+    '''
     extracted_line_numbers = []
     prob_sub_dict = []
+    
+    # Iterate through each line segment
     for segment in data:
+        # e.g. "<1> <state>x:10<dictsep>y:20</state>"
         if not segment.strip(): continue
+
+        # Extract the line number from the segment
         parts = segment.split(">")
         if len(parts) > 1:
             line_number_str = parts[0].replace('<', '').strip()
             try:
                 line_number = int(line_number_str)
+                # Adjust the line number by +1
                 extracted_line_numbers.append(line_number+1)
             except ValueError:
                 continue
+        
+        # Check if the segment contains the symbol table information
         if len(segment.split("<state>")) != 2: continue
+
         # Get the content from <state> and </state> 
         t1 = segment.split("<state>")[1].strip()
         t2 = t1.split("</state>")[0].strip()
+        
         # Filter out the empty strings --> No Prediction
         if not t2: continue
+
         # Get the content from <dictsep>
         t3 = t2.split("<dictsep>")
         if not t3: continue
+
         # Get the key-value pairs
         temp_dict = {}
         for key_value in t3:
@@ -89,16 +135,18 @@ def fetch_the_symbol_table(data):
                 continue
         try:
             temp_dict = str(temp_dict)
+            # Check if the constructed dictionary is valid
             temp_dict = eval(temp_dict)
         except Exception as e:
-            print(e)
             continue
+        # Append the symbol table information to the list and the corresponding line number (adjusted by +1)
         prob_sub_dict.append({"line" : line_number+1, "symbol_table" : temp_dict})
     
     return prob_sub_dict, extracted_line_numbers
 
 # Parse the CodeExecutor Prediction
 def parse_the_prediction(dataset, response):
+    '''Parse the CodeExecutor prediction and extract the symbol table and execution order.'''
     pred_exe_symbol_table = {}
 
     for id, prob_sub in enumerate(dataset.keys()):
@@ -112,12 +160,17 @@ def parse_the_prediction(dataset, response):
         
         prob_sub_dict, extracted_line_numbers = fetch_the_symbol_table(line_segments)
         if not prob_sub in pred_exe_symbol_table:   pred_exe_symbol_table[prob_sub] = {}
+
         pred_exe_symbol_table[prob_sub]["symbol_table"] = prob_sub_dict
         pred_exe_symbol_table[prob_sub]["execution_order"] = extracted_line_numbers
 
     return pred_exe_symbol_table
 
 def main():
+    '''References:
+    This code is based on the baseline implementation from the following repository:
+    [CodeExecutor](https://github.com/microsoft/CodeBERT/blob/master/CodeExecutor/pretrain/run.py)
+    '''
     parser = argparse.ArgumentParser()
 
     ## Other parameters
@@ -235,6 +288,7 @@ def main():
     complete_code_output_dir = output_dir / 'codeExe_fixeval.json'
     incomplete_code_output_dir = output_dir / 'codeExe_incom_fixeval.json'
 
+    # Save the results
     logger.info(f"\nSaving results for Complete Code dataset at {complete_code_output_dir}")
     with open(complete_code_output_dir, 'w') as json_file:
         json.dump(parsed_prediction, json_file, default=str)

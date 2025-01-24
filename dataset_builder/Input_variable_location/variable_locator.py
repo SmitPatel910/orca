@@ -2,6 +2,18 @@ import ast
 from tqdm import tqdm
 
 class InputVisitor(ast.NodeVisitor):
+    '''AST NodeVisitor to identify and collect input-related variables and operations.
+
+    This class traverses an abstract syntax tree (AST) of Python code and extracts:
+    - Variables assigned from input operations.
+    - Variables that append results of input operations to lists.
+    - Return statements involving input operations.
+
+    Attributes:
+        input_vars (list): A list of variables assigned using input calls, with their line numbers.
+        append_inputs (list): A list of variables to which input call results are appended, with their line numbers.
+        return_inputs (list): A list of return statements containing input calls, with their line numbers.
+    '''
     def __init__(self):
         self.input_vars = []
         self.append_inputs = []
@@ -50,12 +62,29 @@ class InputVisitor(ast.NodeVisitor):
         return self.input_vars, self.append_inputs, self.return_inputs
 
 def find_input_variables_from_file(code):
+    '''Parse Python code to identify variables and operations related to input calls.
+
+    This function uses the `InputVisitor` class to traverse the abstract syntax tree (AST)
+    of the provided Python code and extract:
+    - Variables assigned using input calls.
+    - List operations that append results of input calls.
+    - Return statements containing input calls.
+
+    Args:
+        code (str): The Python source code as a string.
+
+    Returns:
+        tuple: A tuple containing:
+            - input_vars (list): Variables assigned using input calls with line numbers.
+            - append_inputs (list): Variables to which input call results are appended with line numbers.
+            - return_inputs (list): Return statements involving input calls with line numbers.
+    '''
     tree = ast.parse(code)
     visitor = InputVisitor()
     visitor.visit(tree)
     return visitor.report()
 
-# Check if there is any while loop
+# Check If Code has any while loop
 class WhileLoopFinder(ast.NodeVisitor):
     def __init__(self):
         self.while_loops = []
@@ -72,7 +101,7 @@ def find_while_loops(code):
     finder.visit(tree)
     return finder.while_loops
 
-# Check if there is any For loop
+# Check If Code has any For loop
 class ForLoopFinder(ast.NodeVisitor):
     def __init__(self):
         self.for_loop_scope_2 = []
@@ -95,6 +124,7 @@ def find_for_loops(code):
     finder.visit(tree)
     return finder.for_loop_scope_2, finder.for_loop_scopes
 
+# Check If Code has if else in the same line
 def if_else_in_same_line(code):
     lines = code.split('\n')
     for line in lines:
@@ -104,6 +134,30 @@ def if_else_in_same_line(code):
     return False
 
 def main(codeDict):
+    '''Analyze a dataset of code submissions to identify and classify input variable usage.
+
+    This function processes a dataset of code submissions, analyzing each submission for the following:
+    - Input variables assigned, appended, or returned.
+    - Input variables used in while loops, for loops (of different scope sizes), and methods.
+    - Input variables on the last line of for loop scopes with specific conditions.
+    - Presence of if-else statements on the same line.
+
+    We are flagging those submissions that contain input variables in above mentioned conditions to 
+    choose good quality submissions for the dataset and make the Control Flow Graphs more accurate.
+
+    Args:
+        codeDict (dict): A dictionary containing problems and their submissions.
+
+    Returns:
+        dict: A dictionary mapping each problem ID and submission ID to its analyzed results.
+
+    Key Variables:
+        - variables_in_while_loop (int): Count of instances has input in while loops.
+        - variables_in_for_loop (int): Count of instances has input in for loops.
+        - variables_on_last_line_of_for_loop_scope_2 (int): Count of instances has input on the last line of for loop scope 2.
+        - variables_in_methods (int): Count of instances has input in the return statement.
+    '''
+
     error_count = 0
     variables_in_while_loop = 0
     variables_in_for_loop = 0

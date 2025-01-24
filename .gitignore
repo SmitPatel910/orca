@@ -4,6 +4,3 @@ __pycache__/
 # Ignore specific directory
 *.pyc
 .DS_Store
-
-# Ignore environment configuration files
-.env

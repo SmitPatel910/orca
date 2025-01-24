@@ -5,8 +5,9 @@ from pathlib import Path
 script_directory = Path(__file__).resolve()
 base_directory = script_directory.parents[3]
 
-def print_results(is_complete, count, buggy_count, non_buggy_count, ErrorLocation, tp, fp, fn, tn, EM, PRE_R, PRE_P, COV_R, COV_P):
-    print(f"Total Instances: {count}")
+# Function to print the results
+def print_results(is_complete, total, buggy_count, non_buggy_count, ErrorLocation, tp, fp, fn, tn, EM, PRE_R, PRE_P, COV_R, COV_P):
+    print(f"Total Instances: {total}")
     print(f"Buggy Instances: {buggy_count}")
     print(f"Non-Buggy Instances: {non_buggy_count}")
     
@@ -31,72 +32,91 @@ def print_results(is_complete, count, buggy_count, non_buggy_count, ErrorLocatio
     print(f"\nAccuracy: {100 * ((tp + tn)/(buggy_count + non_buggy_count)):.2f}")
 
     print("\n============== RQ3 ==============")
-    print(f"Exact Match: {100 * (EM/count):.2f}")
-    print(f"\nPrefix Recall: {100 * (PRE_R/count):.2f}")
-    print(f"Prefix Precision: {100 * (PRE_P/count):.2f}")
-    print(f"\nStatement Cov. Recall: {100 * (COV_R/count):.2f}")
-    print(f"Statement Cov. Precision: {100 * (COV_P/count):.2f}")
+    print(f"Exact Match: {100 * (EM/total):.2f}")
+    print(f"\nPrefix Recall: {100 * (PRE_R/total):.2f}")
+    print(f"Prefix Precision: {100 * (PRE_P/total):.2f}")
+    print(f"\nStatement Cov. Recall: {100 * (COV_R/total):.2f}")
+    print(f"Statement Cov. Precision: {100 * (COV_P/total):.2f}")
 
+# Function to process the Accuracy data
 def process_data(is_complete, dataset, response_cache):
-    ErrorLocation = 0
-    tp = 0
-    fp = 0
-    fn = 0
-    tn = 0
-    EM = 0
-    COV_R = 0
-    COV_P = 0
-    PRE_R = 0
-    PRE_P = 0
-    count = 0
-    buggy_count = 0
-    non_buggy_count = 0
+    ErrorLocation = 0 # Error Localization Accuracy
+    tp = 0 # True Positive
+    fp = 0 # False Positive
+    fn = 0 # False Negative
+    tn = 0 # True Negative
+    EM = 0 # Exact Match
+    COV_R = 0 # Statement Coverage Recall
+    COV_P = 0 # Statement Coverage Precision
+    PRE_R = 0 # Prefix Match Recall
+    PRE_P = 0 # Prefix Match Precision
+    
+    buggy_count = 0 # Number of buggy instances
+    non_buggy_count = 0 # Number of non-buggy instances
 
     for probID in response_cache:
 
         for subID in response_cache[probID]:
 
-            exception_info = dataset[probID][subID]['exception_info']
+            ground_truth_exception_info = dataset[probID][subID]['exception_info']
             obj = response_cache[probID][subID]
             
-            if exception_info:
+            # Check if the instance is buggy or not
+            if ground_truth_exception_info:
                 buggy_count += 1
             else:
                 non_buggy_count += 1
 
-            count += 1
+            # Check if the instance is empty
             if obj == {}: continue
             if obj['accuracy'] == {}: continue
             
             accuracy = obj['accuracy']
             
             # RQ1
+            # Checking for the Error Detection (True Positive, False Positive, False Negative, True Negative)
             if accuracy['Is_Error'] != None:
-                if exception_info and accuracy['Is_Error'] == True:
-                    tp += 1
-                elif not exception_info and accuracy['Is_Error'] == False:
-                    tn += 1
-                elif not exception_info and accuracy['Is_Error'] == True:
-                    fp += 1
-                elif exception_info and accuracy['Is_Error'] == False:
-                    fn += 1
+                # If the instance is buggy and the model predicts it as buggy
+                if ground_truth_exception_info and accuracy['Is_Error'] == True:
+                    tp += 1 # True Positive
+                
+                # If the instance is not buggy and the model predicts it as not buggy
+                elif not ground_truth_exception_info and accuracy['Is_Error'] == False:
+                    tn += 1 # True Negative
+
+                # If the instance is not buggy and the model predicts it as buggy
+                elif not ground_truth_exception_info and accuracy['Is_Error'] == True:
+                    fp += 1 # False Positive
+
+                # If the instance is buggy and the model predicts it as not buggy
+                elif ground_truth_exception_info and accuracy['Is_Error'] == False:
+                    fn += 1 # False Negative
             
-            if exception_info and accuracy['ErrorLocation'] and accuracy['Is_Error'] == True:
-                ErrorLocation += accuracy['ErrorLocation']
+            # Checking for the Error Localization
+            if ground_truth_exception_info and accuracy['ErrorLocation'] and accuracy['Is_Error'] == True:
+                ErrorLocation += accuracy['ErrorLocation'] # Error Localization Accuracy
             
             # RQ2
+            # Checking for the Exact Match
             if accuracy['EM'] != None:  
-                EM += accuracy['EM']
+                EM += accuracy['EM'] # Exact Match
+
+            # Checking for the Prefix Match 
             if accuracy['PRE'][0] != None and accuracy['PRE'][1] != None:  
-                PRE_R += accuracy['PRE'][0]; PRE_P += accuracy['PRE'][1]
-            if accuracy['COV'][0] != None and accuracy['COV'][1] != None:  
-                COV_R += accuracy['COV'][0]; COV_P += accuracy['COV'][1]
+                PRE_R += accuracy['PRE'][0] # Prefix Match Recall
+                PRE_P += accuracy['PRE'][1] # Prefix Match Precision
+            
+            # Checking for the Statement Coverage
+            if accuracy['COV'][0] != None and accuracy['COV'][1] != None:
+                COV_R += accuracy['COV'][0] # Statement Coverage Recall
+                COV_P += accuracy['COV'][1] # Statement Coverage Precision
 
     total = buggy_count + non_buggy_count
 
     # Output the results
     print_results(is_complete, total, buggy_count, non_buggy_count, ErrorLocation, tp, fp, fn, tn, EM, PRE_R, PRE_P, COV_R, COV_P)
 
+# Function to load the dataset
 def load_dataset(dataset_path):
     with open(dataset_path, 'r') as f:
         data = json.load(f)

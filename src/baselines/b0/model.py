@@ -1,7 +1,13 @@
+'''
+References:
+
+This code is based on the baseline implementation from the following repository:
+
+[CodeExecutor](https://github.com/microsoft/CodeBERT/blob/master/CodeExecutor/pretrain/model.py)
+'''
+
 import torch
 import torch.nn as nn
-# from utils import Beam
-# from utils import Beam
 
 class Seq2Seq(nn.Module):
     def __init__(
@@ -10,9 +16,7 @@ class Seq2Seq(nn.Module):
         ):
         super(Seq2Seq, self).__init__()
         self.encoder = encoder
-        # self.encoder_key = encoder_key
         self.decoder = decoder
-        # self.decoder_key = decoder_key
         self.config = config
         self.register_buffer(
             "bias", torch.tril(torch.ones((1024, 1024), dtype=torch.uint8)).view(1, 1024, 1024)

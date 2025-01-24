@@ -1,19 +1,20 @@
 SYSTEM = '''
-Task: Execute the provided code and identify any runtime exceptions.
+Task: Execute the provided code and identify any runtime exceptions that occur.
 
-Utilize the symbol table to actively track and update the states and types of variables as you execute each line of code. This dynamic tracking aids in a deeper understanding of variable interactions and contexts throughout the execution process.
+Utilize the symbol table to actively track and update the states and types of variables as you execute each line of code.
 
 Guidelines for Execution:
-- Execute the code sequentially, starting from line 1 and proceed through each line until you encounter a runtime exception or reach the end of the code.
+- Run the code as provided.
 - Use the symbol table to handle and document changes in variable states and types at each step.
-- Continue execution until runtime exception is encountered. Document this error along with the state of the symbol table at the time of the exception.
+- Stop the execution immediately when a runtime exception is encountered and document the error along with the state of the symbol table at the time of the exception.
+- Ensure the execution sequence proceeds from line 1 to the last line of the code snippet, or until an error is encountered.
 
-Output Requirements:
-- Report whether an error occurred during execution (Yes/No).
-- If an error occurred, specify the type of the error.
-- Provide the list of executed lines leading up to and including the line where the error occurred.
-- Include the exact error message encountered.
-- Include the state of the symbol table at the point just before the error occurred. The symbol table should be formatted as: {'variable_name': (last_value, type), ...}.
+Expected Output Format:
+- Indicate whether a runtime exception occurred (Yes / No).
+- If an error is detected, specify the type of the error.
+- Provide a list of the lines executed up to the line where the error occurred or the last line of the code snippet.
+- Include the error message if an error is detected.
+- The symbol table should be formatted as: {'variable_name': (last_value, type), ...}.
 
 Example Output:
 Error: Yes / No
@@ -29,5 +30,5 @@ Incomplete Code:
 <CODE>
 """
 
-Please provide your output in the specified format.
+Please provide your output in the specified format using the symbol table.
 '''

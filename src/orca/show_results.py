@@ -32,8 +32,6 @@ def calculate_rq1_2(RQ_no, table_number, dataset, response_cache):
                 if res_obj == {}: continue
                 if res_obj['accuracy'] == {}: continue
 
-                
-
                 accuracy = res_obj['accuracy']
                 
             except Exception as e:
@@ -41,12 +39,12 @@ def calculate_rq1_2(RQ_no, table_number, dataset, response_cache):
                 continue
 
             '''## RQ1 and RQ2 ##'''
-            # ============ Table 1 ============
+            # ============ Table 1/3 ============
             # Error Block Match
             if accuracy['EB']:
                 Error_Block += accuracy['EB']
 
-            # ============ Table 2 ============
+            # ============ Table 2/4 ============
             # Error Detection Match
             if exception_info and accuracy['is_error'] == True:
                 true_positive += 1
@@ -56,7 +54,6 @@ def calculate_rq1_2(RQ_no, table_number, dataset, response_cache):
                 false_positive += 1
             elif exception_info and accuracy['is_error'] == False:
                 false_negative += 1
-
 
     print(f"\n========================================= RQ{RQ_no} =========================================")
     if RQ_no == 1: print(f"Complete Code Results for Table {table_number} and Table {table_number + 1}\n")
@@ -311,7 +308,23 @@ def calculate_rq5(table_number, dataset, response_cache):
     print(f"Accuracy: {for_pre}%")
     
 def process_data(complete_dataset, incomplete_dataset, complete_response_cache, incomplete_response_cache):
-    
+    '''
+        This function processes the output data and shows the accuracy results for the following RQs:
+
+        Args: 
+            complete_dataset (dict): Complete dataset
+            incomplete_dataset (dict): Incomplete dataset
+            complete_response_cache (dict): Complete dataset response
+            incomplete_response_cache (dict): Incomplete dataset response
+
+        Note:
+            The function calculates the following RQs:
+            RQ1: Error Localization and Error Detection for Complete Code (Table 1 and Table 2)
+            RQ2: Error Localization and Error Detection for Incomplete Code (Table 3 and Table 4)
+            RQ3: Exact Match, Prefix Match, and Statement Coverage for Complete and Incomplete Code (Table 5,6 and Table 7)
+            RQ4: Variable Value Accuracy for Complete Code (Table 8)
+            RQ5: Crash Location Profiling for Complete Code (Table 9)
+    '''
     # Calculate RQ1 (parameters: rq_number, table_number, dataset, response_cache)
     calculate_rq1_2(1, 1, complete_dataset, complete_response_cache)
 
@@ -329,11 +342,13 @@ def process_data(complete_dataset, incomplete_dataset, complete_response_cache, 
     # Calculate RQ5 for Complete Code only(parameters: table_number, dataset, response_cache)
     calculate_rq5(9, complete_dataset, complete_response_cache)
 
+# Load the dataset
 def load_file(dataset_path):
     with open(dataset_path, 'r') as f:
         data = json.load(f)
     return data
 
+# Entry point
 if __name__ == "__main__":
 
     # Complete and Incomplete Dataset Paths
@@ -351,6 +366,7 @@ if __name__ == "__main__":
 
     complete_results = load_file(complete_dataset_response_path)
     incomplete_results = load_file(incomplete_dataset_response_path)
-
+    
+    # Process the data
     process_data(complete_dataset, incomplete_dataset, complete_results, incomplete_results)
     print()
