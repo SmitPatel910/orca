@@ -230,7 +230,7 @@ if __name__ == "__main__":
     # Define command-line arguments using argparse
     parser = argparse.ArgumentParser(description="\nRun the GPT pipeline for baseline b1 evaluation.\n")
     parser.add_argument("--temperature", type=float, default=0.7, help="Set the temperature for randomness in response generation (default: 0.7).")
-    parser.add_argument("--model", type=str, default="gpt_35_turbo_16k", help="Set the model to use (default: gpt_35_turbo_16k).")
+    parser.add_argument("--model", type=str, help="Set the model to use.", required=True)
     parser.add_argument("--seed", type=int, default=42, help="Set the random seed for deterministic behavior (default: 42).")
     parser.add_argument("--timeout", type=int, default=120, help="Set the timeout for the API call in seconds (default: 120).")
 
