@@ -151,7 +151,7 @@ def gpt_pipeline(args, is_complete_code, code, ground_truth_execution_order, gro
     
     except Exception as e:
         print("API Call Failed!")
-        print("Error: {e}")
+        print(f"Error: {e}")
         return {}, {}, {}, "API Call Failed!"
 
 # Process the dataset
