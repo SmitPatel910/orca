@@ -136,7 +136,7 @@ Use the following command to execute the pipeline. You can either replace the pa
 ## Contributing Guidelines
 - Code should carry appropriate comments, wherever necessary, and follow the docstring convention in the repository.
 
-If you see something that could be improved, send a pull request! We are always happy to look at improvements, to ensure that `orca`, as a project, is the best version of itself.
+- If you see something that could be improved, send a pull request! We are always happy to look at improvements, to ensure that `orca`, as a project, is the best version of itself.
 If you think something should be done differently (or is just-plain-broken), please create an issue.
 
 --- 
