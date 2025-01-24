@@ -101,7 +101,7 @@ Follow the steps below to replicate the results for ``baselines`` and the ``ORCA
      - `seed`: `42`  
      - `timeout`: `120`  
    ```bash
-   python pipeline.py --model <MODEL_NAME> --temperature <INT> --seed <INT> --timeout <INT>
+   python pipeline.py --model <MODEL_NAME> --temperature <FLOAT> --seed <INT> --timeout <INT>
    ```
 3. View the Results:
    After running the pipeline, check the results using the following command:
@@ -118,7 +118,7 @@ Use the following command to execute the pipeline. You can either replace the pa
      - `seed`: `42`  
      - `timeout`: `120`
     ```bash
-    python pipeline.py --model <MODEL_NAME> --temperature <INT> --seed <INT> --timeout <INT>
+    python pipeline.py --model <MODEL_NAME> --temperature <FLOAT> --seed <INT> --timeout <INT>
     ```
 3. View the Results:
    After running the pipeline, check the results using the following command:
