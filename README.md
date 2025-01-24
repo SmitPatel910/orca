@@ -9,11 +9,13 @@ The artifact has been made publicly accessible on ([GitHub](https://github.com/S
 The source code, data, and model outputs are publicly available on ([GitHub](https://github.com/SmitPatel910/orca))
 
 ## Getting Started
-This section describes the preqrequisites, and contains instructions, to get the project up and running.
+This section describes the prerequisites and contains instructions, to get the project up and running.
 
 ### Setup 
 
 #### Hardware Requirements
+``Baseline B0``: The baseline CodeExecutor transformer model requires a __GPU machine__ for execution.
+
 ``ORCA`` requires access to OpenAI API credentials to use __gpt-3.5-turbo__. However, we also provide all LLM responses for the dataset (see `output`), and this can be skipped for experiments' replication.
 
 #### Project Environment
