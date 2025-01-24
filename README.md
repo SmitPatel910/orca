@@ -96,12 +96,11 @@ Follow the steps below to replicate the results for ``baselines`` and the ``ORCA
 2. Run the Pipeline:  
    Use the following command to execute the pipeline. You can either replace the parameters with custom values or stick to the default settings:  
    - **Default Parameters**:  
-     - `model`: `gpt_35_turbo_16k`  
      - `temperature`: `0.7`  
      - `seed`: `42`  
      - `timeout`: `120`  
    ```bash
-   python pipeline.py --model <MODEL_NAME> --temperature <FLOAT> --seed <INT> --timeout <INT>
+   python pipeline.py --model <LLM_MODEL> --temperature <FLOAT> --seed <INT> --timeout <INT>
    ```
 3. View the Results:
    After running the pipeline, check the results using the following command:
@@ -112,13 +111,12 @@ Follow the steps below to replicate the results for ``baselines`` and the ``ORCA
 1. Navigate to the `orca/src/orca/` directory.
 2. Run the Pipeline:  
 Use the following command to execute the pipeline. You can either replace the parameters with custom values or stick to the default settings:  
-   - **Default Parameters**:  
-     - `model`: `gpt_35_turbo_16k`  
+   - **Default Parameters**:    
      - `temperature`: `0.7`  
      - `seed`: `42`  
      - `timeout`: `120`
     ```bash
-    python pipeline.py --model <MODEL_NAME> --temperature <FLOAT> --seed <INT> --timeout <INT>
+    python pipeline.py --model <LLM_MODEL> --temperature <FLOAT> --seed <INT> --timeout <INT>
     ```
 3. View the Results:
    After running the pipeline, check the results using the following command:
