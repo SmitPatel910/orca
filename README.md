@@ -81,7 +81,7 @@ To evaluate the accuracy of all baselines and the ORCA model for the research qu
 
 ---
 
-### Steps to Replicate Results
+### Steps to Reproduce Results
 Follow the steps below to replicate the results for ``baselines`` and the ``ORCA`` model. 
 
 #### For Baseline **B0**
