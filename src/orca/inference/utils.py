@@ -1,5 +1,7 @@
+import re
 import ast
- 
+
+# CFG Generation
 def replace_code_in_file(filePath, code):
     '''Replace occurrences of "TestString" with the given indented code.
 
@@ -368,59 +370,6 @@ def renumber_cfg_blocks(cfg_block_statements, cfg_block_range, cfg_block_connect
 
     return new_cfg_block_statements, new_cfg_block_ranges, new_cfg_block_connection
 
-def map_execution_order_to_blockwise(cfg_block_range, execution_order, execution_trace):
-    '''
-    Convert line wise execution trace to block wise execution trace.
-
-    Arguments:
-        cfg_block_range (dict): A dictionary mapping block IDs to their line ranges.
-        execution_order (list): A list of line numbers representing the order of execution.
-            Example: [1, 2, 3, 5, ...]
-        execution_trace (list): A list of dictionaries containing trace information for each line.
-            Example: [{'line': 1, 'var_val': {'x': 1, 'y': 'res'}}, {'line': 2, 'var_val': {'x': 3, 'y': 'res'}}, ...]
-    
-    Returns:
-        list: A list of dictionaries representing blocks wise execution trace.
-            Example: [{'block': 'Block 1', 'state':{'x': 1, 'y': 'res'}}, {'block': 'Block 2', 'state': {'x': 3, 'y': 'res'}}, ...]
-    '''
-    execution_blocks = []
-
-    # Step 1: Combine execution order and trace information
-    combined_execution_trace = []
-    for index, line_number in enumerate(execution_order):
-        try:
-            trace_line_number = int(execution_trace[index]['line'])
-            if trace_line_number == int(line_number):
-                variable_state = execution_trace[index]['var_val']
-                combined_execution_trace.append({"line_number": trace_line_number, "state": variable_state})
-            else:
-                combined_execution_trace.append({"line_number": int(line_number), "state": []})
-        except Exception as e:
-            combined_execution_trace.append({"line_number": int(line_number), "state": []})
-
-    # Step 2: Map block ranges for easier lookup
-    blocks_ranges = {}
-    for each_block in cfg_block_range:
-        range = cfg_block_range[each_block]['range']
-        min_line = range[0]; max_line = range[1]
-        blocks_ranges[each_block] = [min_line, max_line]
-    
-    # Step 3: Generate block wise execution trace
-    last_block = None
-    for entry in combined_execution_trace:
-        line_number = entry['line_number']
-        state = entry['state']
-        for block_name, range_ in blocks_ranges.items():
-            if range_[0] <= line_number <= range_[1]:
-                if last_block == block_name: 
-                    execution_blocks[-1] = {"block" : block_name, "state" : state}
-                else:
-                    execution_blocks.append({"block" : block_name, "state" : state})
-                    last_block = block_name
-                break
-
-    return execution_blocks
-
 def generate_cfg_text(block_statements, next_block_connections, block_ranges):
     '''Generate a textual representation of a control flow graph (CFG) from its block data.
     
@@ -491,3 +440,222 @@ def generate_cfg_text(block_statements, next_block_connections, block_ranges):
             cfg_text += "    <END>\n"
     
     return cfg_text
+
+# ORCA Pipeline
+def get_error_block(lines):
+    '''Extract the block number associated with an error from a list of lines.
+
+    This function scans a list of lines to find the first occurrence of a block 
+    number following the pattern "Block: <number>". If a match is found, it 
+    returns the block number. If no match is found, it returns `None`.
+
+    Args:
+        lines (list): A list of strings, each representing a line of text.
+
+    Returns:
+        str or None: 
+            - The block number as a string if a match is found.
+            - `None` if no block number is found.
+    '''
+    # Compile a regex pattern to match "Block: <number>" (case-insensitive)
+    block_pattern = re.compile(r"Block:\s*(\d+)", re.IGNORECASE)
+    # Loop through each line in the input list
+    for line in lines:
+        # Search for the block pattern in the current line
+        block_match = block_pattern.search(line)
+        if block_match:
+            # If a match is found, extract and return the block number
+            block_number = block_match.group(1)
+            return block_number
+    # Return None if no block number is found
+    return None
+
+def fetch_symbol_table(text_block):
+    '''Extract the symbol table from a given block of text.
+
+    This function scans a text block for lines containing a symbol table in the format:
+    "Symbol Table: {...}" or similar. It extracts the symbol table content, evaluates it,
+    and returns it as a dictionary. If no symbol table is found or an error occurs, it
+    returns an empty string.
+
+    Args:
+        text_block (str): A block of text containing potential symbol table information.
+
+    Returns:
+        dict or str: 
+            - A dictionary representing the symbol table if successfully extracted and evaluated.
+            - An empty string if no valid symbol table is found or if an error occurs.
+    '''
+    
+    # Initialize variable to store symbol table content
+    symbol_table_content = ""
+    
+    # Process each line in the text block
+    for text_block_line in text_block.split('\n'):
+        # Look for lines containing "Symbol Table: {...}"
+        lines_with_symbol_tables = re.findall(r'(?i)symbol table:?.*?{.*}', text_block_line)
+        
+        # Extract content inside the curly braces
+        for line in lines_with_symbol_tables:
+            start_index = line.find('{') # Find the starting index of '{'
+            end_index = line.rfind('}') + 1 # Find the ending index of '}'
+            symbol_table_content = line[start_index:end_index]
+    
+    try:
+        # Make sure the symbol table is python dictionary
+        symbol_table = eval(symbol_table_content)
+        return symbol_table
+    except:
+        # Return an empty string if evaluation fails
+        return ""
+
+def get_the_symbol_table(blocks_list):
+    '''Extract symbol tables from each block in the list.
+
+    This function processes a list of blocks and extracts the symbol table 
+    for each block using the `fetch_symbol_table` function. If a block does 
+    not have a symbol table, it assigns an empty dictionary.
+
+    Args:
+        blocks_list (list): A list of dictionaries where each dictionary contains:
+            - "block_id" (int): The ID of the block.
+            - "content" (str): The content of the block.
+
+    Returns:
+        list: A list of dictionaries where each dictionary contains:
+            - "block_id" (int): The ID of the block.
+            - "symbol_table" (dict): The symbol table for the block (empty if none found).
+    '''
+    # Initialize a list to store symbol tables for each block
+    block_id_symbol_table = []
+    # Loop through each block in the list
+    for block in blocks_list:
+        block_id = block['block_id'] # Get the block ID
+        block_content = block['content'] # Get the content of the block
+
+        # Fetch the symbol table for the block content
+        symbol_table = fetch_symbol_table(block_content)
+
+        # If no symbol table is found, add an empty dictionary
+        if symbol_table == "":
+            block_id_symbol_table.append({"block_id": int(block_id), "symbol_table": {}})
+        else:
+            block_id_symbol_table.append({"block_id": int(block_id), "symbol_table": symbol_table})
+    
+    return block_id_symbol_table
+
+# Output Parser
+def output_parser(output):
+    '''Parse the output from the GPT model to extract block execution order, error details, and symbol table.
+
+    Args:
+        output (str): The raw output from the GPT model.
+
+    Returns:
+        tuple: Contains:
+            - block_execution_order (list): List of executed block IDs in order.
+            - error_details (list): Error type, error block, and error flag (e.g., ["TypeError", 3, True]).
+            - blocks_symbol_table (list): Symbol table for each block.
+    '''
+
+    # Check if output contains any required keywords
+    keywords = ['Observation', 'evaluate', 'Error Type', '<END>']
+    if not any(keyword in output for keyword in keywords):
+        print("Output missing keywords: " + ", ".join(keywords))
+        return "", ["", ""]
+    
+    # Initialize the variables
+    blocks_list = []  # Stores block details
+    block_content = []  # Stores content of each block
+    block_execution_order = []  # Stores order of block execution
+    error_type = None  # Type of error (if any)
+    is_error = False  # Flag indicating if an error occurred
+    error_block = None  # Block where the error occurred
+    block_started = False  # Indicates if we are inside a block
+    block_id = None  # ID of the current block
+
+    # Split output into lines and process each line
+    lines = output.split('\n')
+    for index, line in enumerate(lines):
+        # Check if the output indicates an error
+        if 'Is Error' in line and 'true' in line.lower():
+            is_error = True
+        
+        # Extract error type and block if an error occurred
+        if "Error Type" in line and is_error:
+            
+            if "None" in line: 
+                is_error = False
+                break
+            
+            if "<class 'TypeError'>" in line:
+                is_error = True
+                error_type = "TypeError"
+                error_block = get_error_block(lines[index:])
+                break
+
+            else:
+                match = re.search(r"Error Type:\s*(\w+)", line)
+                if match:   
+                    is_error = True
+                    error_type = match.group(1).strip()
+                    error_block = get_error_block(lines[index:])
+                    break
+
+        # Detect the start of a block
+        pattern = r'^Block\s*:?\s*\d+\s*[:]?[ ]?$'
+        matches = re.findall(pattern, line)
+        if matches:
+            # Save previous block if a new block starts
+            if block_started:
+                blocks_list.append({"block_id": int(block_id), "content": '\n'.join(block_content)})
+                block_content = []  # Reset block content for the new block
+            block_started = True
+            block_id = int(line[line.find('Block') + 6:].split(':')[0])
+        
+        # Add lines to the current block content
+        if block_started:
+            block_content.append(line)
+    
+    # Add the last block to the list
+    if block_started:
+        blocks_list.append({"block_id": int(block_id), "content": '\n'.join(block_content)})
+
+    # If no blocks or errors were found
+    if not blocks_list and not is_error and not error_block:
+        return [], []
+    
+    # Process block execution details
+    if blocks_list:
+        try:
+            for block in blocks_list:
+                block_execution_order.append(int(block['block_id']))
+        except:
+            return [], [], []
+        
+        # Block Symbol Table
+        try:
+            blocks_symbol_table = get_the_symbol_table(blocks_list)
+        except:
+            blocks_symbol_table = []
+
+    # Return based on whether errors were found
+    if is_error and error_block:
+        return block_execution_order, [error_type, error_block, is_error], blocks_symbol_table
+    elif is_error and not error_block:
+        return block_execution_order, [error_type, "", is_error], blocks_symbol_table
+    else:
+        return block_execution_order, ["", "", is_error], blocks_symbol_table
+
+def clean_response(obj):
+    """Recursively clean the response object to make it JSON-serializable."""
+    if isinstance(obj, dict):
+        return {k: clean_response(v) for k, v in obj.items()}
+    elif isinstance(obj, list):
+        return [clean_response(item) for item in obj]
+    elif isinstance(obj, tuple):
+        return tuple(clean_response(item) for item in obj)
+    elif isinstance(obj, type):
+        return str(obj.__name__)  # Convert <class 'int'> to 'int'
+    else:
+        return obj

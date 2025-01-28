@@ -66,7 +66,9 @@ To get started, simply set up the model and fill in your credentials to use the 
 1. __src__ - Contains source files for ``All Baselines (B0, B1, B2)`` and  ``ORCA``.
     - **baselines** - b0, b1, b2
     - **orca**
+
 ---    
+
 ### Accuracy Evaluation
 To evaluate the accuracy of all baselines and the ORCA model for the research questions (RQs), refer to the table below.
 
@@ -76,7 +78,9 @@ To evaluate the accuracy of all baselines and the ORCA model for the research qu
 | Baseline __Bo__ Results | Table - 5,6,8, RQ - 3 & 4  | `orca/src/baselines/b0` | `python show_results.py` |
 | Baseline __B1__ Results | Table - 1 to 6, RQ - 1 to 3 | `orca/src/baselines/b1` | `python show_results.py` |
 | Baseline __B2__ Results | Table - 1 to 6, RQ - 1 to 3 | `orca/src/baselines/b2` | `python show_results.py` |
+
 ---
+
 ### Steps to Replicate Results
 Follow the steps below to replicate the results for ``baselines`` and the ``ORCA`` model. 
 
@@ -123,7 +127,25 @@ Use the following command to execute the pipeline. You can either replace the pa
     ```bash
     python show_results.py
     ```
+
 ---
+
+### Inference: Run ORCA for Custom Dataset
+1. Navigate to the `orca/src/orca/inference` directory.
+2. Run the Pipeline:  
+Use the following command to execute the pipeline. You can either replace the parameters with custom values or stick to the default settings:  
+   - **Default Parameters**:    
+     - `temperature`: `0.7`  
+     - `seed`: `42`  
+     - `timeout`: `120`
+     - `input_dir`: `../../../dataset/dataset.json`
+     - `output_dir`: `../../../output/orca`
+    ```bash
+    python pipeline.py --model <LLM_MODEL> --temperature <FLOAT> --seed <INT> --timeout <INT> --input_dir <Dataset Directory Path> --output_dir <Output Directory Path>
+    ```
+3. **CFG Tool Limitation**:
+The CFG (Control Flow Graph) tool work with only one method because it can not map block connection for the method calls. Ensure that each datapoint in your dataset contains one method.
+
 ### Reproducing the Dataset
 
 1. Download the [FixEval](https://drive.google.com/file/d/1Za85w9lwyaaoVRRIuW5mWpAjnuETfLxt/view?usp=sharing) Dataset and and move it to the ```orca/dataset``` directory.

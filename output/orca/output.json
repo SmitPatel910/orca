@@ -1,0 +1,85 @@
+{
+    "1": {
+        "output": "Block: 1\nStatements:\n    a=1\n    b=2\n    (a == 1)\nNext:\n    If True: Go to Block 2\n    If False: Go to Block 3\n\nObservation:\n- Variables 'a' and 'b' are initialized with integer values.\n- There is a condition (a == 1) to determine the next block.\n\nReasoning:\n- The variables 'a' and 'b' are of type int and have valid values.\n- The condition (a == 1) is valid.\n\nAction:\n- Update the symbol table with variable states and types.\n- Proceed to evaluate the condition.\n\nSymbol Table: {'a': (1, int), 'b': (2, int)}\n\nIs Error: False\n\n\nBlock: 2\nStatements:\n    b=3\nNext:\n    Go to Block 4\n\nObservation:\n- Variable 'b' is assigned a new value.\n\nReasoning:\n- The variable 'b' is of type int and has a valid value.\n\nAction:\n- Update the symbol table with the new value for variable 'b'.\n- Move to the next block.\n\nSymbol Table: {'a': (1, int), 'b': (3, int)}\n\nIs Error: False\n\n\nBlock: 4\nStatements:\n    print(b)\nNext:\n    <END>\n\nObservation:\n- The statement prints the value of variable 'b'.\n\nReasoning:\n- The variable 'b' is of type int and has a valid value.\n\nAction:\n- Execute the statement and print the value of variable 'b'.\n\nSymbol Table: {'a': (1, int), 'b': (3, int)}\n\nIs Error: False\n\n\nBlock: 3\nStatements:\n    b=4\nNext:\n    Go to Block 4\n\nObservation:\n- Variable 'b' is assigned a new value.\n\nReasoning:\n- The variable 'b' is of type int and has a valid value.\n\nAction:\n- Update the symbol table with the new value for variable 'b'.\n- Move to the next block.\n\nSymbol Table: {'a': (1, int), 'b': (4, int)}\n\nIs Error: False\n\n\nBlock: 4\nStatements:\n    print(b)\nNext:\n    <END>\n\nObservation:\n- The statement prints the value of variable 'b'.\n\nReasoning:\n- The variable 'b' is of type int and has a valid value.\n\nAction:\n- Execute the statement and print the value of variable 'b'.\n\nSymbol Table: {'a': (1, int), 'b': (4, int)}\n\nIs Error: False\n\n\nEnd of CFG traversal.",
+        "pred": {
+            "block_execution": [
+                1,
+                2,
+                4,
+                3,
+                4
+            ],
+            "error_type": "",
+            "error_block": "",
+            "is_error": false,
+            "block_symbol_table": [
+                {
+                    "block_id": 1,
+                    "symbol_table": {
+                        "a": [
+                            1,
+                            "int"
+                        ],
+                        "b": [
+                            2,
+                            "int"
+                        ]
+                    }
+                },
+                {
+                    "block_id": 2,
+                    "symbol_table": {
+                        "a": [
+                            1,
+                            "int"
+                        ],
+                        "b": [
+                            3,
+                            "int"
+                        ]
+                    }
+                },
+                {
+                    "block_id": 4,
+                    "symbol_table": {
+                        "a": [
+                            1,
+                            "int"
+                        ],
+                        "b": [
+                            3,
+                            "int"
+                        ]
+                    }
+                },
+                {
+                    "block_id": 3,
+                    "symbol_table": {
+                        "a": [
+                            1,
+                            "int"
+                        ],
+                        "b": [
+                            4,
+                            "int"
+                        ]
+                    }
+                },
+                {
+                    "block_id": 4,
+                    "symbol_table": {
+                        "a": [
+                            1,
+                            "int"
+                        ],
+                        "b": [
+                            4,
+                            "int"
+                        ]
+                    }
+                }
+            ]
+        },
+        "pred_time": 4.157921075820923
+    }
+}

@@ -1,0 +1,5 @@
+{
+    "1": {
+        "code": "a=1\nb=2\nif a==1:\n    b=3\nelse:\n    b=4\nprint(b)"
+    }
+}
