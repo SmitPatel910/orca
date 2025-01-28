@@ -3,10 +3,10 @@
 ``ORCA`` is a novel approach that guides a Large Language Model (LLM) to autonomously plan and navigate control flow graphs (CFGs) for predictive execution of (in)complete code snippets, enabling static detection of runtime errors efficiently and cost-effectively. 
 
 ## Purpose
-The artifact has been made publicly accessible on ([GitHub](https://github.com/SmitPatel910/orca)) and ([Zenodo](https://zenodo.org/records/14728842)), providing well-documented source code, experiment replication instructions, and all relevant data and outputs. We are claiming the **Available**, **Functional**, and **Reusable** badges. 
+This artifact has been archived on a public archival repository ([Zenodo](https://zenodo.org/records/14728842)), qualifying it for the **Available** badge. Moreover, it contains well-documented source code for replicating all experiments, along with all data and LLM outputs, in line with the expectations for the **Functional** and **Reusable** badges.
 
 ## Provenance
-The source code, data, and model outputs are publicly available on ([GitHub](https://github.com/SmitPatel910/orca))
+The source code, data, and model outputs are publicly available on ([GitHub](https://github.com/SmitPatel910/orca)) and ([Zenodo](https://zenodo.org/records/14728842))
 
 ## Getting Started
 This section describes the prerequisites and contains instructions, to get the project up and running.
