@@ -14,9 +14,9 @@ This section describes the prerequisites and contains instructions, to get the p
 ### Setup 
 
 #### Hardware Requirements
-``Baseline B0``: The baseline CodeExecutor transformer model requires a __GPU machine__(NVIDIA RTX A6000 GPU) for execution.
+``Baseline B0``: The baseline CodeExecutor transformer model requires a __GPU machine__ (NVIDIA RTX A6000 GPU) for execution.
 
-``ORCA`` requires access to OpenAI API credentials to use __gpt-3.5-turbo__. However, we also provide all LLM responses for the dataset (see `output`), and this can be skipped for experiments' replication.
+``ORCA`` requires access to OpenAI API credentials to use __gpt-3.5-turbo__ (gpt-35-turbo-0613). However, we also provide all LLM responses for the dataset (see `output`), and this can be skipped for experiments' replication.
 
 #### Project Environment
 Currently, ``ORCA`` works well on Ubuntu OS, and can be set up easily with all the prerequisite packages by following these instructions (if ``conda`` is already installed, update to the latest version with ``conda update conda``, and skip steps 1-3):
