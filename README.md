@@ -14,7 +14,7 @@ This section describes the prerequisites and contains instructions, to get the p
 ### Setup 
 
 #### Hardware Requirements
-``Baseline B0``: The baseline CodeExecutor transformer model requires a __GPU machine__ for execution.
+``Baseline B0``: The baseline CodeExecutor transformer model requires a __GPU machine__(NVIDIA RTX A6000 GPU) for execution.
 
 ``ORCA`` requires access to OpenAI API credentials to use __gpt-3.5-turbo__. However, we also provide all LLM responses for the dataset (see `output`), and this can be skipped for experiments' replication.
 
