@@ -181,7 +181,15 @@ def main(buggy_dataset, non_buggy_dataset):
     non_buggy_prob_count_list, valid_non_buggy_prob_sub_mapping = analyze_the_dataset(non_buggy_dataset)
 
     # Define the total count of instances to select from each dataset
-    total_count = 374
+    input_size = int(input("\nDo you want to enter the total count of instances to select? (0 for default numbers or 1 for custom input): "))
+    if input_size == 0:
+        total_count = 374
+    elif input_size == 1:
+        print("Enter the total count of instances to select (up to 374): ")
+        total_count = int(input())
+    else:
+        print("Invalid Input!, going with default value of 374")
+        total_count = 374
     
     # Select a subset of buggy and non-buggy instances
     selected_buggy_instances_mapping = select_instances(buggy_prob_count_list, total_count)

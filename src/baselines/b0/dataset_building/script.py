@@ -80,17 +80,21 @@ if __name__ == "__main__":
                 except:
                     trace_obj = nonbuggy_trace_data[probID][subID]
             except:
-                print(f"Problem ID: {probID}, Sub ID: {subID}")
+                continue
 
-            trace_data = trace_obj['final_trace']
-            if probID not in final_complete_data:
-                final_complete_data[probID] = {}
-            if subID not in final_complete_data[probID]:
-                final_complete_data[probID][subID] = {}
-            final_complete_data[probID][subID] = {
-                **complete_code_obj,
-                'final_trace': trace_data
-            }    
+            try:
+                trace_data = trace_obj['final_trace']
+                if probID not in final_complete_data:
+                    final_complete_data[probID] = {}
+                if subID not in final_complete_data[probID]:
+                    final_complete_data[probID][subID] = {}
+                    
+                final_complete_data[probID][subID] = {
+                    **complete_code_obj,
+                    'final_trace': trace_data
+                }
+            except:
+                continue    
 
     # Merge Incomplete Code Data object with the Trace Data object
     final_incomplete_data = {}
@@ -105,19 +109,21 @@ if __name__ == "__main__":
                 except:
                     trace_obj = nonbuggy_trace_data[probID][subID]
             except:
-                print(f"Problem ID: {probID}, Sub ID: {subID}")
-
-            final_trace = trace_obj['final_trace']
-        
-            if probID not in final_incomplete_data:
-                final_incomplete_data[probID] = {}
-            if subID not in final_incomplete_data[probID]:
-                final_incomplete_data[probID][subID] = {}
-            final_incomplete_data[probID][subID] = {
-                **incom_code_obj,
-                'final_trace': final_trace
-            }
+                continue
             
+            try:
+                final_trace = trace_obj['final_trace']
+        
+                if probID not in final_incomplete_data:
+                    final_incomplete_data[probID] = {}
+                if subID not in final_incomplete_data[probID]:
+                    final_incomplete_data[probID][subID] = {}
+                final_incomplete_data[probID][subID] = {
+                    **incom_code_obj,
+                    'final_trace': final_trace
+                }
+            except:
+                continue
     
     # Flatten the data
     final_complete_data = flatten_data(final_complete_data)

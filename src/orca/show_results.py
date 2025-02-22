@@ -1,3 +1,30 @@
+"""
+show_results.py (RQ1, RQ2, RQ3, RQ4, RQ5):
+This script evaluates the accuracy of ORCA predictions by comparing them against ground truth data.
+
+Functionality:
+- Loads dataset and model predictions from JSON files.
+- Computes various accuracy metrics such as Exact Match, Prefix Match, Statement Coverage, and Symbol Table Accuracy.
+- Differentiates between complete and incomplete code execution scenarios.
+- Outputs results in a structured table format.
+
+Dependencies:
+- Requires JSON dataset and prediction files.
+- Uses accuracy calculation functions from `accuracy.py`.
+
+Input Files:
+1. Complete Code:
+    - Dataset: 'dataset/fixeval_merged_cfg.json'
+    - Predictions: 'output/orca/output_cfg_merged.json'
+
+2. Incomplete Code:
+    - Dataset: 'dataset/fixeval_incom_merged_cfg.json'
+    - Predictions: 'output/orca/output_incom_cfg_merged.json'
+
+Outputs:
+- Prints formatted accuracy results for both complete and incomplete code.
+"""
+
 import json
 from pathlib import Path
 from utils import get_statements_from_blocks, get_scope
@@ -8,6 +35,49 @@ script_directory = Path(__file__).resolve()
 base_directory = script_directory.parents[2]
 
 def calculate_rq1_2(RQ_no, table_number, dataset, response_cache):
+    '''Calculate RQ1 and RQ2
+    Args:
+        RQ_no (int): RQ number (1 or 2)
+        table_number (int): Table number (1 or 3) and (2 or 4)
+        dataset (dict): Dataset containing ground truth data.
+            Example: { "prob_id": {
+                            "sub_id": { "code": str,
+                                        "cfg_block_range": dict,
+                                        "ground_truth_execution_order": list,
+                                        "ground_truth_blocks": list,
+                                        "cfg_block_statements": dict,
+                                        "cfg_next_block": dict,
+                                        "input_cfg": str,
+                                        "exception_info": str
+                                    },
+                                ...
+                            },
+                        ...
+                    }
+
+        response_cache (dict): Predictions made by ORCA.
+            Example: { "prob_id": {
+                            "sub_id": { "accuracy": {
+                                            "EM": int, 
+                                            "PF": [float, float], 
+                                            "CF": [float, float],
+                                            "BM": [float, float],
+                                            "ST": float,
+                                            "EB": int,
+                                            "Is_Error": bool,
+                                        },
+                                        "pred": {
+                                            "block_execution: list, 
+                                            "error_block": int
+                                        },
+                                        "gt": list,
+                                        "output": str
+                                    },
+                                ...
+                            },
+                        ...
+                    }
+    '''
     # Buggy and Non-Buggy Count
     buggy_count = 0
     non_buggy_count = 0
@@ -35,7 +105,6 @@ def calculate_rq1_2(RQ_no, table_number, dataset, response_cache):
                 accuracy = res_obj['accuracy']
                 
             except Exception as e:
-                print(f"Error processing {probID}/{subID}")
                 continue
 
             '''## RQ1 and RQ2 ##'''
@@ -76,6 +145,50 @@ def calculate_rq1_2(RQ_no, table_number, dataset, response_cache):
     print(f"\nAccuracy: {100 * ((true_positive + true_negative) / (buggy_count + non_buggy_count)):.2f}%\n")
 
 def calculate_rq3(table_1, table_2, is_complete, dataset, response_cache):
+    '''Calculate RQ3
+    Args:
+        table_1 (int): Table number from the paper (5 or 6)
+        table_2 (int): Table number from the paper (7)
+        is_complete (bool): Flag to differentiate between complete and incomplete code.
+        dataset (dict): Dataset containing ground truth data.
+            Example: { "prob_id": {
+                            "sub_id": { "code": str,
+                                        "cfg_block_range": dict,
+                                        "ground_truth_execution_order": list,
+                                        "ground_truth_blocks": list,
+                                        "cfg_block_statements": dict,
+                                        "cfg_next_block": dict,
+                                        "input_cfg": str,
+                                        "exception_info": str
+                                    },
+                                ...
+                            },
+                        ...
+                    }
+
+        response_cache (dict): Predictions made by ORCA.
+            Example: { "prob_id": {
+                            "sub_id": { "accuracy": {
+                                            "EM": int, 
+                                            "PF": [float, float], 
+                                            "CF": [float, float],
+                                            "BM": [float, float],
+                                            "ST": float,
+                                            "EB": int,
+                                            "Is_Error": bool,
+                                        },
+                                        "pred": {
+                                            "block_execution: list, 
+                                            "error_block": int
+                                        },
+                                        "gt": list,
+                                        "output": str
+                                    },
+                                ...
+                            },
+                        ...
+                    }           
+    '''
     # Buggy and Non-Buggy Count
     buggy_count = 0
     non_buggy_count = 0
@@ -115,7 +228,6 @@ def calculate_rq3(table_1, table_2, is_complete, dataset, response_cache):
 
                 pd_statement, gt_statement = get_statements_from_blocks(block_range, pred_blocks, gt_blocks)
             except:
-                print(f"Error processing {probID}/{subID}")
                 continue
             
             '''Exact Match Execution'''
@@ -186,6 +298,48 @@ def calculate_rq3(table_1, table_2, is_complete, dataset, response_cache):
     print(f"Precision: {100 * (Block_Transition_P / count):.2f}%")
 
 def calculate_rq4(table_number, dataset, response_cache):
+    '''Calculate RQ4
+    Args:
+        table_number (int): Table number from the paper (8)
+        dataset (dict): Dataset containing ground truth data.
+            Example: { "prob_id": {
+                            "sub_id": { "code": str,
+                                        "cfg_block_range": dict,
+                                        "ground_truth_execution_order": list,
+                                        "ground_truth_blocks": list,
+                                        "cfg_block_statements": dict,
+                                        "cfg_next_block": dict,
+                                        "input_cfg": str,
+                                        "exception_info": str
+                                    },
+                                ...
+                            },
+                        ...
+                    }
+
+        response_cache (dict): Predictions made by ORCA.
+            Example: { "prob_id": {
+                            "sub_id": { "accuracy": {
+                                            "EM": int, 
+                                            "PF": [float, float], 
+                                            "CF": [float, float],
+                                            "BM": [float, float],
+                                            "ST": float,
+                                            "EB": int,
+                                            "Is_Error": bool,
+                                        },
+                                        "pred": {
+                                            "block_execution: list, 
+                                            "error_block": int
+                                        },
+                                        "gt": list,
+                                        "output": str
+                                    },
+                                ...
+                            },
+                        ...
+                    }           
+    '''
     buggy_count = 0
     non_buggy_count = 0
     Symbol_Table = 0
@@ -222,6 +376,50 @@ def calculate_rq4(table_number, dataset, response_cache):
     print("\nVarible Value Accuracy: ", f"{100 * (Symbol_Table / count):.2f}%\n")
 
 def calculate_rq5(table_number, dataset, response_cache):
+    '''Calculate RQ5
+    
+    Args:
+        table_number (int): Table number from the paper (9)
+    
+        dataset (dict): Dataset containing ground truth data.
+            Example: { "prob_id": {
+                            "sub_id": { "code": str,
+                                        "cfg_block_range": dict,
+                                        "ground_truth_execution_order": list,
+                                        "ground_truth_blocks": list,
+                                        "cfg_block_statements": dict,
+                                        "cfg_next_block": dict,
+                                        "input_cfg": str,
+                                        "exception_info": str
+                                    },
+                                ...
+                            },
+                        ...
+                    }
+
+        response_cache (dict): Predictions made by ORCA.
+            Example: { "prob_id": {
+                            "sub_id": { "accuracy": {
+                                            "EM": int, 
+                                            "PF": [float, float], 
+                                            "CF": [float, float],
+                                            "BM": [float, float],
+                                            "ST": float,
+                                            "EB": int,
+                                            "Is_Error": bool,
+                                        },
+                                        "pred": {
+                                            "block_execution: list, 
+                                            "error_block": int
+                                        },
+                                        "gt": list,
+                                        "output": str
+                                    },
+                                ...
+                            },
+                        ...
+                    }           
+    '''
     buggy_count = 0
 
     type_statements = {
@@ -283,7 +481,6 @@ def calculate_rq5(table_number, dataset, response_cache):
                     type_statements[type_statement]["total"] += 1
                 
             except:
-                print(f"Error processing {probID}/{subID}")
                 continue
             
     for_pre = f"{100 * ((type_statements['for']['correct'] + type_statements['while']['correct']) / (type_statements['for']['total']+ type_statements['while']['total'])):.2f}"
@@ -326,24 +523,34 @@ def process_data(complete_dataset, incomplete_dataset, complete_response_cache, 
             RQ5: Crash Location Profiling for Complete Code (Table 9)
     '''
     # Calculate RQ1 (parameters: rq_number, table_number, dataset, response_cache)
+    # Table: 1,2,3,4
     calculate_rq1_2(1, 1, complete_dataset, complete_response_cache)
 
     # Calculate RQ2 (parameters: rq_number, dataset, response_cache)
+    # Table: 1,2,3,4
     calculate_rq1_2(2, 3, incomplete_dataset, incomplete_response_cache)
 
     # Calculate RQ3 (parameters: table1_number, table2_number, is_complete, dataset, response_cache)
+    # Table: 5,6,7
     calculate_rq3(5, 7, True, complete_dataset, complete_response_cache)
-    
     calculate_rq3(6, 7, False, incomplete_dataset, incomplete_response_cache)
 
     # Calculate RQ4 for Complete Code only(parameters: table_number, dataset, response_cache)
+    # Table: 8
     calculate_rq4(8, complete_dataset, complete_response_cache)
 
     # Calculate RQ5 for Complete Code only(parameters: table_number, dataset, response_cache)
+    # Table: 9
     calculate_rq5(9, complete_dataset, complete_response_cache)
 
 # Load the dataset
 def load_file(dataset_path):
+    '''Load the dataset from the given path.
+    Args:
+        dataset_path (str): Path to the dataset file.
+    Returns:
+        dict: A dictionary containing the dataset.
+    '''
     with open(dataset_path, 'r') as f:
         data = json.load(f)
     return data

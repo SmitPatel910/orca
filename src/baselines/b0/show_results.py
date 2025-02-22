@@ -1,3 +1,30 @@
+"""
+show_results.py (RQ3 & RQ4):
+This script evaluates the accuracy of model-generated (CodeExecutor - B0) execution predictions by comparing them against ground truth data.
+
+Functionality:
+- Loads dataset and model predictions from JSON files.
+- Computes various accuracy metrics such as Exact Match, Prefix Match, and Statement Coverage.
+- Differentiates between complete and incomplete code execution scenarios.
+- Outputs results in a structured table format.
+
+Dependencies:
+- Requires JSON dataset and prediction files.
+- Uses accuracy calculation functions from `accuracy.py`.
+
+Input Files:
+1. Complete Code:
+    - Dataset: 'dataset/baseline/fixeval_cfg_b0.json'
+    - Predictions: 'output/baseline/b0/codeExe_fixeval.json'
+
+2. Incomplete Code:
+    - Dataset: 'dataset/baseline/fixeval_incom_cfg_b0.json'
+    - Predictions: 'output/baseline/b0/codeExe_incom_fixeval.json'
+
+Outputs:
+- Prints formatted accuracy results for both complete and incomplete code.
+"""
+
 import json
 from pathlib import Path
 from accuracy import calculate_exact_match, calculate_statement_coverage, calculate_prefix_match, calculate_symbol_table_accuracy
@@ -6,7 +33,46 @@ from accuracy import calculate_exact_match, calculate_statement_coverage, calcul
 script_directory = Path(__file__).resolve()
 base_directory = script_directory.parents[3]
 
-def process_data(complete, dataset, pred_codeExe):
+def process_data(complete, dataset, predictions):
+    ''' Iterate over the predictions to calculate the accuracy metrics.
+    Args:
+        complete (bool): Flag to indicate if the dataset is complete or incomplete.
+        
+        dataset (dict): The dataset containing the ground truth.
+            Example: { "id":{   "code": str,
+                                "cfg_block_range": dict,
+                                "ground_truth_execution_order": list,
+                                "ground_truth_blocks": list,
+                                "cfg_block_statements": dict,
+                                "cfg_next_block": dict,
+                                "input_cfg": str,
+                                "exception_info": str,
+                                "final_trace": list
+                            },
+                        ...
+                     }
+
+        predictions (dict): The predictions made by CodeExecutor (B0).
+            Example: { "id":{   "symbol_table": dict,
+                                "execution_order": list
+                            },
+                        ...
+                     }
+    
+    Returns:
+        dict: A dictionary containing the accuracy metrics.
+            {
+                "Total Instances": int,
+                "Buggy Instances": int,
+                "Non-Buggy Instances": int,
+                "Exact Match": float,
+                "Prefix Match Recall": float,
+                "Prefix Match Precision": float,
+                "Statement Coverage Recall": float,
+                "Statement Coverage Precision": float,
+                "Symbol Table Accuracy": float
+            }
+    '''
     EM = 0 # Exact Match
     COV_R = 0 # Statement Coverage Recall
     COV_P = 0 # Statement Coverage Precision
@@ -17,23 +83,23 @@ def process_data(complete, dataset, pred_codeExe):
     buggy_count = 0 # Number of buggy instances
     non_buggy_count = 0 # Number of non-buggy instances
 
-    for id in pred_codeExe.keys():
-        # check if the instance is buggy or not
-        exception_info = dataset[id]['exception_info']
-        if exception_info:
-            buggy_count += 1
-        else:
-            non_buggy_count += 1
-
-        # Get the prediction for the current instance
-        pred_symbol_table = pred_codeExe[id]["symbol_table"]
-        pred_exe = pred_codeExe[id]['execution_order']
-
-        # Get the ground truth for the current instance
-        gt_exe_symbol_table = dataset[id]['final_trace']
-        gt_exe = dataset[id]['ground_truth_execution_order']
-        
+    for id in predictions.keys():
         try:
+            # check if the instance is buggy or not
+            exception_info = dataset[id]['exception_info']
+            if exception_info:
+                buggy_count += 1
+            else:
+                non_buggy_count += 1
+
+            # Get the prediction for the current instance
+            pred_symbol_table = predictions[id]["symbol_table"]
+            pred_exe = predictions[id]['execution_order']
+
+            # Get the ground truth for the current instance
+            gt_exe_symbol_table = dataset[id]['final_trace']
+            gt_exe = dataset[id]['ground_truth_execution_order']
+        
             # Calculate the Exact Match accuracy
             exact_match = calculate_exact_match(pred_exe, gt_exe)
             EM += exact_match
@@ -61,7 +127,7 @@ def process_data(complete, dataset, pred_codeExe):
     # Prepare the results for the complete code dataset
     if complete:
         return {
-            "Total Instances": len(pred_codeExe),
+            "Total Instances": len(predictions),
             "Buggy Instances": buggy_count,
             "Non-Buggy Instances": non_buggy_count,
             "Exact Match": 100 * (EM/total),
@@ -74,7 +140,7 @@ def process_data(complete, dataset, pred_codeExe):
     # Prepare the results for the incomplete code dataset
     else:
         return {
-            "Total Instances": len(pred_codeExe),
+            "Total Instances": len(predictions),
             "Buggy Instances": buggy_count,
             "Non-Buggy Instances": non_buggy_count,
             "Exact Match": 100 * (EM/total),
@@ -86,10 +152,20 @@ def process_data(complete, dataset, pred_codeExe):
 
 # Load the dataset
 def load_dataset(dataset_path):
+    """
+    Load a JSON dataset from the specified file path.
+
+    Args:
+        dataset_path (str or Path): Path to the JSON file.
+
+    Returns:
+        dict: A dictionary containing the dataset or the response cache.
+    """
     with open(dataset_path, 'r') as f:
         dataset = json.load(f)
     return dataset
 
+# Main Function
 if __name__ == "__main__":
 
     # Complete Code Dataset and Prediction

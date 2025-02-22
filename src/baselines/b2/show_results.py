@@ -1,3 +1,29 @@
+"""
+show_results.py: (RQ1, RQ2, RQ3)
+This script evaluates the accuracy of Baseline (B2) predictions by comparing them against ground truth data.
+
+Functionality:
+- Loads dataset and response cache from JSON files.
+- Computes various accuracy metrics such as TP, FP, FN, TN, EM, Prefix Match, and Statement Coverage.
+- Differentiates between complete and incomplete code execution scenarios.
+- Outputs results in a structured table format.
+
+Dependencies:
+- Requires JSON dataset and response_cache files.
+
+Input Files:
+1. Complete Code:
+    - Dataset: 'dataset/fixeval_merged_cfg.json'
+    - response_cache: 'output/baseline/b2/b2_complete_fixeval.json'
+
+2. Incomplete Code:
+    - Dataset: 'dataset/baseline/fixeval_incom_merged_cfg.json'
+    - response_cache: 'output/baseline/b2/b2_incomplete_fixeval.json'
+
+Outputs:
+- Prints formatted accuracy results for both complete and incomplete code.
+"""
+
 import json
 from pathlib import Path
 
@@ -40,6 +66,50 @@ def print_results(is_complete, total, buggy_count, non_buggy_count, ErrorLocatio
 
 # Function to process the Accuracy data
 def process_data(is_complete, dataset, response_cache):
+    ''' Iterate over the response cache to calculate the accuracy metrics.
+    Args:
+        is_complete (bool): Flag to differentiate between complete and incomplete code.
+        
+        dataset (dict): Ground truth dataset.
+            Example: { "prob_id": {
+                            "sub_id": { "code": str,
+                                        "cfg_block_range": dict,
+                                        "ground_truth_execution_order": list,
+                                        "ground_truth_blocks": list,
+                                        "cfg_block_statements": dict,
+                                        "cfg_next_block": dict,
+                                        "input_cfg": str,
+                                        "exception_info": str
+                                    },
+                                ...
+                            },
+                        ...
+                    }
+        
+        response_cache (dict): The response cache containing the predictions.
+            Example: { "prob_id": {
+                            "sub_id": { "accuracy": {
+                                            "EM": int, 
+                                            "PRE": [int, int], 
+                                            "COV": [int, int], 
+                                            "ErrorLocation": int, 
+                                            "Is_Error": bool,
+                                        },
+                                        "pred": {
+                                            "statement_execution: list, 
+                                            "is_error": bool
+                                        },
+                                        "gt": list,
+                                        "output": str
+                                    },
+                                ...
+                            },
+                        ...
+                    }
+
+    Returns: None (Prints the accuracy results.)
+    '''
+
     ErrorLocation = 0 # Error Localization Accuracy
     tp = 0 # True Positive
     fp = 0 # False Positive
@@ -118,10 +188,20 @@ def process_data(is_complete, dataset, response_cache):
 
 # Function to load the dataset
 def load_dataset(dataset_path):
+    """
+    Load a JSON dataset from the specified file path.
+
+    Args:
+        dataset_path (str or Path): Path to the JSON file.
+
+    Returns:
+        dict: A dictionary containing the dataset or the response cache.
+    """
     with open(dataset_path, 'r') as f:
         data = json.load(f)
     return data
 
+# Main Function
 if __name__ == "__main__":
     # Dataset paths
     complete_code_dataset = base_directory / 'dataset' / 'fixeval_merged_cfg.json'
