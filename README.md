@@ -6,7 +6,7 @@
 This artifact has been archived on a public archival repository ([Zenodo](https://zenodo.org/records/14728842)), qualifying it for the **Available** badge. Moreover, it contains well-documented source code for replicating all experiments, along with all data and LLM outputs, in line with the expectations for the **Functional** and **Reusable** badges.
 
 ## Provenance
-The source code, data, and model outputs are publicly available on ([GitHub](https://github.com/SmitPatel910/orca)) and ([Zenodo](https://zenodo.org/records/14728842))
+The source code, data, and model outputs are publicly available on ([GitHub](https://github.com/SmitPatel910/orca)) and ([Zenodo]([https://zenodo.org/records/14728842](https://zenodo.org/records/14910225)))
 
 ## Getting Started
 This section describes the prerequisites and contains instructions, to get the project up and running.
