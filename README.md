@@ -41,7 +41,7 @@ Currently, ``ORCA`` works well on Ubuntu OS, and can be set up easily with all t
      ```
   
 #### API Key Setup
-__ORCA__ traverse the Control flow graph with the Observation, Reasoning, and Actions, while carefully tracking the Symbol Table after each block. Since this process requires a  ``higher token limit``, we’ve chosen to use the ``gpt-3.5-turbo`` model with the ``2023-05-15`` API version to ensure the successful graph traversal.
+__ORCA__ traverse the Control flow graph with the Observation, Reasoning, and Actions, while carefully tracking the Symbol Table after each block. Since this process requires a  ``higher token limit``, we’ve chosen to use the ``gpt-3.5-turbo (gpt-35-turbo-0613)`` model with the ``2023-05-15`` API version to ensure the successful graph traversal.
 To get started, simply set up the model and fill in your credentials to use the ``ORCA`` model in the `.env` file.
 ```bash
    AZURE_OPENAI_ENDPOINT = ""
