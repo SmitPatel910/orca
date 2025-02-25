@@ -152,9 +152,9 @@ ORCA’s modular design allows it to be extended to support other APIs, such as 
 
 To adapt the framework for a different API, follow these steps:
 1. Update the `.env` File
-Update the API key to another LLM. (e.g., for Gemini add GOOGLE_GEMINI_API_KEY)
+- Update the API key to another LLM. (e.g., for Gemini add GOOGLE_GEMINI_API_KEY)
 2. Modify `model.py` File
-In `src/orca/model.py` the `AgentInteraction` __class__ handles API interactions. To support a new API:
+- In `src/orca/model.py` the `AgentInteraction` __class__ handles API interactions. To support a new API:
    - Import library for the LLM (e.g., for Gemini, `pip install google-generativeai`)
    - Update the `__init__` Method: Replace the OpenAI client initialization with the new API’s client
    - Adjust the `api_call` Function: Modify this to match the new API’s prompt and response format. (e.g., [Gemini Documentation](https://ai.google.dev/gemini-api/docs/quickstart?lang=python))
