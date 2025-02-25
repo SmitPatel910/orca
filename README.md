@@ -155,9 +155,9 @@ To adapt the framework for a different API, follow these steps:
    - Add the new API key. For example, for Google’s Gemini, add `GOOGLE_GEMINI_API_KEY=<your-key>`.
 2. **Modify the `model.py` File**
      - In `src/orca/model.py`, the `AgentInteraction` class manages API interactions. To support a new API:  
-     1. Install and import the new LLM library (e.g., run `pip install google-generativeai` for Gemini and import it).  
-     2. Update the `__init__` method to initialize the new API client using the key from `.env`.  
-     3. Adjust the `api_call` method to match the new API’s request/response format (e.g., refer to the [Gemini API Documentation](https://ai.google.dev/gemini-api/docs/quickstart?lang=python)).
+         1. Install and import the new LLM library (e.g., run `pip install google-generativeai` for Gemini and import it).  
+         2. Update the `__init__` method to initialize the new API client using the key from `.env`.  
+         3. Adjust the `api_call` method to match the new API’s request/response format (e.g., refer to the [Gemini API Documentation](https://ai.google.dev/gemini-api/docs/quickstart?lang=python)).
 
 ### Reproducing the Dataset
 
