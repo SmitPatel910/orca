@@ -52,7 +52,7 @@ To get started, simply set up the model and fill in your credentials to use the 
 ### Directory Structure
 1. __dataset__ - Contains the dataset files.
     - **baseline** - Contains the dataset files for baseline - ``CodeExecutor (B0)``.
-    - **fixeval_cfg_b0.json** and **fixeval_incom_cfg_b0.json** - dataset files for ``ORCA`` and ``Other Baselines (B1 & B2)``
+    - **fixeval_cfg_b0.json** and **fixeval_incom_cfg_b0.json** - dataset files for ``ORCA`` and ``Other Baselines (B1 and B2)``
 1. __dataset_builder__ - Includes all the modules required to __rebuild__ the dataset.
     - **Input_Variable_location** - Filter out the main dataset based on the input variable lines location.
     - **Hunter** - Collect the ground truth data by running the instances.
