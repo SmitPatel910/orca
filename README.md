@@ -4,7 +4,7 @@
 
 ## Purpose
 <!-- This artifact has been archived on a public archival repository ([Zenodo](https://zenodo.org/records/14910225)), qualifying it for the **Available** badge. Moreover, it contains well-documented source code for replicating all experiments, along with all data and LLM outputs, in line with the expectations for the **Functional** and **Reusable** badges. -->
-The artifact is archived on a public repository ([Zenodo](https://zenodo.org/records/14910225)), qualifying it for the **Available** badge. It includes well-documented source code, datasets, and LLM outputs necessary to replicate all experiments, fulfilling the requirements for the **Functional** badge. Furthermore, the framework is designed to be modular and extensible, allowing it to support other LLMs with minimal modifications (__see the "Extending the Framework to Other APIs" section for details__), which aligns with the criteria for the **Reusable** badge.
+The artifact is archived on a public repository ([Zenodo](https://zenodo.org/records/14910225)), qualifying it for the **Available** badge. It includes well-documented source code, datasets, and LLM outputs necessary to replicate all experiments, fulfilling the requirements for the **Functional** badge. Furthermore, the framework is designed to be modular and extensible, allowing it to support other LLMs with minimal modifications (check "Extending the Framework to Other APIs"), which aligns with the criteria for the **Reusable** badge.
 
 ## Provenance
 The source code, data, and model outputs are publicly available on ([GitHub](https://github.com/SmitPatel910/orca)) and ([Zenodo](https://zenodo.org/records/14910225))
@@ -148,7 +148,7 @@ Use the following command to execute the pipeline. You can either replace the pa
 The CFG (Control Flow Graph) tool work with only one method because it can not map block connection for the method calls. Ensure that each datapoint in your dataset contains one method.
 
 ### Extending the Framework to Other APIs
-ORCA’s modular design allows it to be extended to support other APIs, such as __Google’s Gemini__, __Anthropic’s Claude__, or others, with minimal modifications. To adapt the framework for a different API, follow these steps:
+ORCA’s modular design allows it to be extended to support other APIs, such as __Google’s Gemini__, __Anthropic’s Claude__ with minimal modifications. To adapt the framework for a different API, follow these steps:
 1. Update the `.env` File
 Update the API key to another LLM. (e.g., for Gemini add GOOGLE_GEMINI_API_KEY)
 2. Modify `model.py` File
