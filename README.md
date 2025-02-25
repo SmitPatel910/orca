@@ -148,16 +148,19 @@ Use the following command to execute the pipeline. You can either replace the pa
 The CFG (Control Flow Graph) tool work with only one method because it can not map block connection for the method calls. Ensure that each datapoint in your dataset contains one method.
 
 ### Extending the Framework to Other APIs
-ORCA’s modular design allows it to be extended to support other APIs, such as __Google’s Gemini__, __Anthropic’s Claude__ with minimal modifications.
+The Framework can be extended to support other APIs, such as **Google’s Gemini**, **Anthropic’s Claude**, and others, with minimal modifications. ORCA’s modular design ensures these changes are straightforward and localized.
 
 To adapt the framework for a different API, follow these steps:
-1. Update the `.env` File
-- Update the API key to another LLM. (e.g., for Gemini add GOOGLE_GEMINI_API_KEY)
-2. Modify `model.py` File
-- In `src/orca/model.py` the `AgentInteraction` __class__ handles API interactions. To support a new API:
-   - Import library for the LLM (e.g., for Gemini, `pip install google-generativeai`)
-   - Update the `__init__` Method: Replace the OpenAI client initialization with the new API’s client
-   - Adjust the `api_call` Function: Modify this to match the new API’s prompt and response format. (e.g., [Gemini Documentation](https://ai.google.dev/gemini-api/docs/quickstart?lang=python))
+
+1. **Update the `.env` File**
+   - Add the new API key. For example, for Google’s Gemini, include `GOOGLE_GEMINI_API_KEY=<your-key>`.
+2. **Modify the `model.py` File**
+   - In `src/orca/model.py`, the `AgentInteraction` class handles API interactions. To support a new API:
+     1. Install and import the new LLM library (e.g., for Gemini, run `pip install google-generativeai` and import it).
+     2. Update the `__init__` method to initialize the new API client with the key from `.env`.
+     3. Adjust the `api_call` method to match the new API’s request and response format (e.g., see [Gemini API Documentation](https://ai.google.dev/gemini-api/docs/quickstart?lang=python)).
+
+These modifications are isolated within the `AgentInteraction` class, leaving the rest of the framework intact, which enhances its reusability.
 
 ### Reproducing the Dataset
 
