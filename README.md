@@ -3,11 +3,10 @@
 ``ORCA`` is a novel approach that guides a Large Language Model (LLM) to autonomously plan and navigate control flow graphs (CFGs) for predictive execution of (in)complete code snippets, enabling static detection of runtime errors efficiently and cost-effectively. 
 
 ## Purpose
-<!-- The artifact is archived on a public repository ([Zenodo](https://zenodo.org/records/14910225)), qualifying it for the **Available** badge. It includes well-documented source code, datasets, and LLM outputs necessary to replicate all experiments, fulfilling the requirements for the **Functional** badge. Furthermore, the framework is designed to be modular and extensible, allowing it to support other LLMs with minimal modifications (check "Extending the Framework to Other APIs"), which aligns with the criteria for the **Reusable** badge. -->
-The artifact is archived on a public repository ([Zenodo](https://zenodo.org/records/14910225)), qualifying it for the **Available** badge. It includes well-documented source code, datasets, and LLM outputs necessary to replicate all experiments, fulfilling the requirements for the **Functional** badge. Framework can be extended to support other APIs with minimal modifications. For details, see the [Extending the Framework to Other APIs](#extending-the-framework-to-other-apis) section. This extensibility aligns with the criteria for the **Reusable** badge.
+The artifact is archived on a public repository ([Zenodo](https://zenodo.org/records/14922083)), qualifying it for the **Available** badge. It includes well-documented source code, datasets, and LLM outputs necessary to replicate all experiments, fulfilling the requirements for the **Functional** badge. Framework can be extended to support other APIs with minimal modifications. For details, see the [Extending the Framework to Other APIs](#extending-the-framework-to-other-apis) section. This extensibility aligns with the criteria for the **Reusable** badge.
 
 ## Provenance
-The source code, data, and model outputs are publicly available on ([GitHub](https://github.com/SmitPatel910/orca)) and ([Zenodo](https://zenodo.org/records/14910225))
+The source code, data, and model outputs are publicly available on ([GitHub](https://github.com/SmitPatel910/orca)) and ([Zenodo](https://zenodo.org/records/14922083))
 
 ## Getting Started
 This section describes the prerequisites and contains instructions, to get the project up and running.
@@ -159,8 +158,6 @@ To adapt the framework for a different API, follow these steps:
      1. Install and import the new LLM library (e.g., for Gemini, run `pip install google-generativeai` and import it).
      2. Update the `__init__` method to initialize the new API client with the key from `.env`.
      3. Adjust the `api_call` method to match the new API’s request and response format (e.g., see [Gemini API Documentation](https://ai.google.dev/gemini-api/docs/quickstart?lang=python)).
-
-These modifications are isolated within the `AgentInteraction` class, leaving the rest of the framework intact, which enhances its reusability.
 
 ### Reproducing the Dataset
 
