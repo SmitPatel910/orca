@@ -148,7 +148,8 @@ Use the following command to execute the pipeline. You can either replace the pa
 The CFG (Control Flow Graph) tool work with only one method because it can not map block connection for the method calls. Ensure that each datapoint in your dataset contains one method.
 
 ### Extending the Framework to Other APIs
-ORCA’s modular design allows it to be extended to support other APIs, such as __Google’s Gemini__, __Anthropic’s Claude__ with minimal modifications. To adapt the framework for a different API, follow these steps:
+ORCA’s modular design allows it to be extended to support other APIs, such as __Google’s Gemini__, __Anthropic’s Claude__ with minimal modifications.
+To adapt the framework for a different API, follow these steps:
 1. Update the `.env` File
 Update the API key to another LLM. (e.g., for Gemini add GOOGLE_GEMINI_API_KEY)
 2. Modify `model.py` File
