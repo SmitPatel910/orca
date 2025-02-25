@@ -3,7 +3,8 @@
 ``ORCA`` is a novel approach that guides a Large Language Model (LLM) to autonomously plan and navigate control flow graphs (CFGs) for predictive execution of (in)complete code snippets, enabling static detection of runtime errors efficiently and cost-effectively. 
 
 ## Purpose
-This artifact has been archived on a public archival repository ([Zenodo](https://zenodo.org/records/14910225)), qualifying it for the **Available** badge. Moreover, it contains well-documented source code for replicating all experiments, along with all data and LLM outputs, in line with the expectations for the **Functional** and **Reusable** badges.
+<!-- This artifact has been archived on a public archival repository ([Zenodo](https://zenodo.org/records/14910225)), qualifying it for the **Available** badge. Moreover, it contains well-documented source code for replicating all experiments, along with all data and LLM outputs, in line with the expectations for the **Functional** and **Reusable** badges. -->
+The artifact is archived on a public repository ([Zenodo](https://zenodo.org/records/14910225)), qualifying it for the **Available** badge. It includes well-documented source code, datasets, and LLM outputs necessary to replicate all experiments, fulfilling the requirements for the **Functional** badge. Furthermore, the framework is designed to be modular and extensible, allowing it to support other LLMs with minimal modifications (__see the "Extending the Framework to Other APIs" section for details__), which aligns with the criteria for the **Reusable** badge.
 
 ## Provenance
 The source code, data, and model outputs are publicly available on ([GitHub](https://github.com/SmitPatel910/orca)) and ([Zenodo](https://zenodo.org/records/14910225))
@@ -145,6 +146,16 @@ Use the following command to execute the pipeline. You can either replace the pa
     ```
 3. **CFG Tool Limitation**:
 The CFG (Control Flow Graph) tool work with only one method because it can not map block connection for the method calls. Ensure that each datapoint in your dataset contains one method.
+
+### Extending the Framework to Other APIs
+ORCA’s modular design allows it to be extended to support other APIs, such as __Google’s Gemini__, __Anthropic’s Claude__, or others, with minimal modifications. To adapt the framework for a different API, follow these steps:
+1. Update the `.env` File
+Update the API key to another LLM. (e.g., for Gemini add GOOGLE_GEMINI_API_KEY)
+2. Modify `model.py` File
+In `src/orca/model.py` the `AgentInteraction` __class__ handles API interactions. To support a new API:
+   - Import library for the LLM (e.g., for Gemini, `pip install google-generativeai`)
+   - Update the `__init__` Method: Replace the OpenAI client initialization with the new API’s client
+   - Adjust the `api_call` Function: Modify this to match the new API’s prompt and response format. (e.g., [Gemini Documentation](https://ai.google.dev/gemini-api/docs/quickstart?lang=python))
 
 ### Reproducing the Dataset
 
