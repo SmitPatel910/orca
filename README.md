@@ -49,6 +49,15 @@ To get started, simply set up the model and fill in your credentials to use the 
    AZURE_API_VERSION = ""
    ```
 ---
+
+### Experiment Reproduction Details
+
+- **API Usage:** Experiments for ORCA, Baseline B1, and Baseline B2 use the OpenAI API with the model `gpt-3.5-turbo-0613`.  
+- **Estimated API Cost:** The total estimated cost for reproducing all ORCA experiments on both buggy and non-buggy datasets is approximately $4.50.  
+- **Hardware for Baseline B0:** NVIDIA RTX A6000 GPU (48GB VRAM) was used for running Baseline B0 experiments.  
+- **Estimated Time for Baseline B0:** Approximately 34 minutes for processing both buggy and non-buggy datasets.
+---
+
 ### Directory Structure
 1. __dataset__ - Contains the dataset files.
     - **baseline** - Contains the dataset files for baseline - ``CodeExecutor (B0)``.
